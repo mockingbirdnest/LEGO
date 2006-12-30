@@ -914,11 +914,16 @@ begin
                 S.Z            := 0;
                 S.Direction    := X_Axis;
                 S.Start_Of_Row := True;
-                Put_Line ("0 STEP");
-                if Bottom = null then
-                    Put_Line ("0 WRITE End of step" & Integer'Image (-S.Y));
-                else
-                    Put_Line ("0 WRITE End of step" & Integer'Image (-S.Y - 1));
+                if not Skip or else not Is_Top_Bottom then
+                    Ada.Text_Io.Put_Line (File, "0 STEP");
+                    if Bottom = null then
+                        Ada.Text_Io.Put_Line (File, "0 WRITE End of step" &
+                                                       Integer'Image (-S.Y));
+                    else
+                        Ada.Text_Io.Put_Line (File,
+                                              "0 WRITE End of step" &
+                                                 Integer'Image (-S.Y - 1));
+                    end if;
                 end if;
             elsif Corner_Stud /= Last_Stud then
                 case S.Direction is
