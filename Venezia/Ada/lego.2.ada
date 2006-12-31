@@ -122,6 +122,25 @@ package body Lego is
         return Ldraw_Id'Image (Color_Definitions (C).Ldraw);
     end Ldraw_Image;
 
+    function False_Image (C : Color) return String is
+    begin
+        case C is
+            when Clear | Brown | Red | Orange =>
+                return Ldraw_Image (C);
+            when Dark_Orange =>
+                return " 26"; -- Magenta
+            when Dark_Red =>
+                return " 22"; -- Purple
+            when Medium_Orange =>
+                return " 14"; -- Yellow
+            when Reddish_Brown =>
+                return " 19"; -- Tan
+            when others =>
+                pragma Assert (False);
+                null;
+        end case;
+    end False_Image;
+
     function Part_Id_Image (P : Part) return String is
     begin
         case P is

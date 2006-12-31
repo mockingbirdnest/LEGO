@@ -831,21 +831,7 @@ begin
                 when Options.Direct =>
                     Put (" " & Lego.Direct_Image (C));
                 when Options.False =>
-                    case C is
-                        when Lego.Clear | Lego.Brown | Lego.Red | Lego.Orange =>
-                            Put (" " & Lego.Ldraw_Image (C));
-                        when Lego.Dark_Orange =>
-                            Put (" 26"); -- Magenta
-                        when Lego.Dark_Red =>
-                            Put (" 22"); -- Purple
-                        when Lego.Medium_Orange =>
-                            Put (" 14"); -- Yellow
-                        when Lego.Reddish_Brown =>
-                            Put (" 19"); -- Tan
-                        when others =>
-                            pragma Assert (False);
-                            null;
-                    end case;
+                    Put (" " & Lego.False_Image (C));
                 when Options.Ldraw =>
                     Put (" " & Lego.Ldraw_Image (C));
             end case;

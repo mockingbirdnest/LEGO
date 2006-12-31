@@ -55,6 +55,7 @@ package Lego is
 
 
     function Direct_Image (C : Color) return String;
+    function False_Image (C : Color) return String;
     function Ldraw_Image (C : Color) return String;
     function Part_Id_Image (P : Part) return String;
 
