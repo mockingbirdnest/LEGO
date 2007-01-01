@@ -100,8 +100,8 @@ procedure Generate_Wall is
     package Ef is new Ada.Numerics.Generic_Elementary_Functions
                          (Genetics.Fitness);
 
-    Width_Minus_One : constant Genetics.Gene :=
-       Genetics.Gene (Width - 1);
+    Width_Minus_One : constant Genetics.Gene'Base :=
+       Genetics.Gene'Base (Width - 1);
 
     Best_Individual : Genetics.Individual;
     Best_Fitness    : Genetics.Fitness;
@@ -519,87 +519,91 @@ begin
         return;
     end if;
 
-    if Options.Left /= null then
-        Left := new Options.Constraint_Array'
-                       ((1 .. Boolean'Pos (Bottom /= null) => 0) &
-                        Options.Left.all &
-                        (1 .. Boolean'Pos (Top /= null) => 0));
-    end if;
-    if Options.Right /= null then
-        Right := new Options.Constraint_Array'
-                        ((1 .. Boolean'Pos (Bottom /= null) => 0) &
-                         Options.Right.all &
-                         (1 .. Boolean'Pos (Top /= null) => 0));
-    end if;
+    -- No optimization is taking place for a wall of width 1, but we
+    -- still want to select the colors and output a file.
+    if Width > 1 then
 
-    -- Random population at the beginning.
-    Current := P1'Access;
-    Next    := P2'Access;
+        if Options.Left /= null then
+            Left := new Options.Constraint_Array'
+                           ((1 .. Boolean'Pos (Bottom /= null) => 0) &
+                            Options.Left.all &
+                            (1 .. Boolean'Pos (Top /= null) => 0));
+        end if;
+        if Options.Right /= null then
+            Right := new Options.Constraint_Array'
+                            ((1 .. Boolean'Pos (Bottom /= null) => 0) &
+                             Options.Right.all &
+                             (1 .. Boolean'Pos (Top /= null) => 0));
+        end if;
 
-    declare
-        package Randomizer is new Genetics.Randomizer (Seed);
-    begin
-        for G in Current'Range loop
-            Current (G) := Randomizer.Random;
-            Apply_Constraints (Current (G));
+        -- Random population at the beginning.
+        Current := P1'Access;
+        Next    := P2'Access;
+
+        declare
+            package Randomizer is new Genetics.Randomizer (Seed);
+        begin
+            for G in Current'Range loop
+                Current (G) := Randomizer.Random;
+                Apply_Constraints (Current (G));
+            end loop;
+        end;
+
+        Age := 1;
+        while Age <= Generations loop
+
+            -- Evaluate fitness.
+            Best_Fitness := 0.0;
+            Has_Mozart   := False;
+            Fitnesses    :=
+               Compute_Fitnesses
+                  (Genetics.Access_Constant_Population (Current));
+
+            -- Print the best individual.
+            exit when Best_Fitness = 1.0;
+            if Trace (Options.Age) then
+                Ada.Text_Io.Put_Line
+                   (Ada.Text_Io.Standard_Error,
+                    Integer'Image (Age) &
+                       Genetics.Fitness'Image (Best_Fitness));
+            end if;
+            if (Has_Mozart and then
+                Trace (Options.Mozart)) or else
+               Trace (Options.Genome) then
+                Trace_Wall (Current (Best_Individual));
+            end if;
+
+            -- Reproduction.
+            declare
+                S : aliased Reproduction_State :=
+                   (Children => Next,
+                    Fitnesses => Fitnesses'Unchecked_Access);
+            begin
+                Beget_Children
+                   (Genetics.Access_Constant_Population (Current),
+                    S'Unchecked_Access);
+            end;
+
+            -- Switch the generations.
+            declare
+                Tmp : constant Genetics.Access_All_Population :=
+                   Current;
+            begin
+                Current := Next;
+                Next    := Tmp;
+            end;
+
+            Age := Age + 1;
         end loop;
-    end;
 
-    Age := 1;
-    while Age <= Generations loop
-
-        -- Evaluate fitness.
-        Best_Fitness := 0.0;
-        Has_Mozart   := False;
-        Fitnesses    :=
-           Compute_Fitnesses
-              (Genetics.Access_Constant_Population (Current));
-
-        -- Print the best individual.
-        exit when Best_Fitness = 1.0;
-        if Trace (Options.Age) then
-            Ada.Text_Io.Put_Line
-               (Ada.Text_Io.Standard_Error,
-                Integer'Image (Age) &
-                   Genetics.Fitness'Image (Best_Fitness));
-        end if;
-        if (Has_Mozart and then
-            Trace (Options.Mozart)) or else
-           Trace (Options.Genome) then
-            Trace_Wall (Current (Best_Individual));
+        if Trace (Options.Mozart) then
+            Ada.Text_Io.Put_Line (Ada.Text_Io.Standard_Error,
+                                  "Mozart" &
+                                     Genetics.Fitness'Image (Mozart_Fitness));
+            Trace_Wall (Mozart);
         end if;
 
-        -- Reproduction.
-        declare
-            S : aliased Reproduction_State :=
-               (Children => Next,
-                Fitnesses => Fitnesses'Unchecked_Access);
-        begin
-            Beget_Children
-               (Genetics.Access_Constant_Population (Current),
-                S'Unchecked_Access);
-        end;
-
-        -- Switch the generations.
-        declare
-            Tmp : constant Genetics.Access_All_Population :=
-               Current;
-        begin
-            Current := Next;
-            Next    := Tmp;
-        end;
-
-        Age := Age + 1;
-    end loop;
-
-    if Trace (Options.Mozart) then
-        Ada.Text_Io.Put_Line (Ada.Text_Io.Standard_Error,
-                              "Mozart" &
-                                 Genetics.Fitness'Image (Mozart_Fitness));
-        Trace_Wall (Mozart);
     end if;
-
-    -- Anfr.Reset (Color_Generator, 42);
 
     -- We want to make sure that different walls explore different sequences of the
     -- color generator, otherwise we would have biases.  We use as the seed the number
