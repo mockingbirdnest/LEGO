@@ -44,7 +44,7 @@ package Lego is
         Red =>
            (others => True),
         Reddish_Brown =>
-           (Tile_1X6 => False, others => True),
+           (others => True),
         Sand_Red =>
            (Plate_1X2 => True, others => False),
         Tan =>
