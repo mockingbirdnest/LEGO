@@ -2,26 +2,25 @@
 0 Unofficial Model
 0 Rotation Center 0 0 0 1 "Custom"
 0 Rotation Config 0 0
-0 /bottom 2-3-3-6-4-1-1
+0 /bottom 1-1
 0 /color LDRAW
-0 /colorseed 0
-0 /corner 5
+0 /colorseed 22
 0 /crossover 2
-0 /height 1
+0 /height 3
 0 /mutations 1.00000E-03
 0 /population 1000
-0 /seed 42
-0 /width 20
+0 /seed 22
+0 /top 1-1
+0 /width 2
 0 /result_fitness 1.00000E+00
-0 /result_generation 3
-1  4  10 -8  10 1 0 0 0 1 0 0 0 1 3070B.DAT
-1  320  40 -8  10 1 0 0 0 1 0 0 0 1 3069B.DAT
-1  4  70 -8  10 1 0 0 0 1 0 0 0 1 3070B.DAT
-1  25  90 -8  20 0 0 -1 0 1 0 1 0 0 3069B.DAT
-1  4  90 -8  80 0 0 -1 0 1 0 1 0 0 2431.DAT
-1  6  90 -8  130 0 0 -1 0 1 0 1 0 0 3070B.DAT
-1  462  90 -8  180 0 0 -1 0 1 0 1 0 0 2431.DAT
-1  70  90 -8  230 0 0 -1 0 1 0 1 0 0 3070B.DAT
-1  462  90 -8  280 0 0 -1 0 1 0 1 0 0 2431.DAT
+0 /result_generation 2
+1  320  20 -8  10 1 0 0 0 1 0 0 0 1 3023.DAT
 0 STEP
 0 WRITE End of step 1
+1  320  10 -16  10 1 0 0 0 1 0 0 0 1 3024.DAT
+1  25  30 -16  10 1 0 0 0 1 0 0 0 1 3024.DAT
+0 STEP
+0 WRITE End of step 2
+1  462  20 -24  10 1 0 0 0 1 0 0 0 1 3023.DAT
+0 STEP
+0 WRITE End of step 3
