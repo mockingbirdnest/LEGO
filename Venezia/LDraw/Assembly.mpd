@@ -55,50 +55,50 @@
 0 ROTATION CENTER 0 0 0 1 "Custom" 
 0 ROTATION CONFIG 0 0
 1 0 0 0 0 1 0 0 0 1 0 0 0 1 Base.ldr
-1 0 -120 -96 -860 1 0 0 0 1 0 0 0 1 Ground Floor 1.ldr
-1 0 100 -200 -860 1 0 0 0 1 0 0 0 1 Ground Floor 2.ldr
-1 0 -120 -200 -860 1 0 0 0 1 0 0 0 1 Ground Floor 3.ldr
-1 0 20 -104 -340 -1 0 0 0 1 0 0 0 -1 Ground Floor 4.ldr
-1 0 20 -176 -340 -1 0 0 0 1 0 0 0 -1 Ground Floor 5.ldr
-1 0 -100 -192 -340 -1 0 0 0 1 0 0 0 -1 Ground Floor 6.ldr
-1 0 -140 -104 -720 0 0 1 0 1 0 -1 0 0 Ground Floor 7.ldr
-1 0 -140 -176 -540 0 0 1 0 1 0 -1 0 0 Ground Floor 8.ldr
-1 0 -140 -248 -540 0 0 1 0 1 0 -1 0 0 Ground Floor 9.ldr
-1 0 -320 -104 80 0 0 1 0 1 0 -1 0 0 Ground Floor 10.ldr
-1 0 40 -104 60 0 0 -1 0 1 0 1 0 0 Ground Floor 11.ldr
-1 0 -660 -248 400 0 0 1 0 1 0 -1 0 0 Ground Floor 12.ldr
-1 0 -60 -104 140 0 0 1 0 1 0 -1 0 0 Ground Floor 13.ldr
-1 0 -60 -280 0 0 0 1 0 1 0 -1 0 0 Ground Floor 14.ldr
-1 0 -340 -264 -360 1 0 0 0 1 0 0 0 1 Ground Floor 15.ldr
-1 0 20 -288 240 0 0 1 0 1 0 -1 0 0 Ground Floor 16.ldr
-1 0 -280 -264 -360 0 0 1 0 1 0 -1 0 0 Ground Floor 20.ldr
-1 0 -280 -264 -660 0 0 1 0 1 0 -1 0 0 Ground Floor 21.ldr
-1 0 -280 -264 -720 0 0 1 0 1 0 -1 0 0 Ground Floor 22.ldr
-1 0 -140 -264 -360 0 0 1 0 1 0 -1 0 0 Ground Floor 23.ldr
-1 0 -140 -264 -720 0 0 1 0 1 0 -1 0 0 Ground Floor 24.ldr
-1 0 -280 -264 -480 0 0 1 0 1 0 -1 0 0 Ground Floor 25.ldr
-1 0 -280 -264 -600 0 0 1 0 1 0 -1 0 0 Ground Floor 26.ldr
-1 0 -140 -264 -420 0 0 1 0 1 0 -1 0 0 Ground Floor 27.ldr
-1 0 -140 -264 -540 0 0 1 0 1 0 -1 0 0 Ground Floor 28.ldr
-1 0 -140 -264 -660 0 0 1 0 1 0 -1 0 0 Ground Floor 29.ldr
-1 0 -280 -272 -420 0 0 1 0 1 0 -1 0 0 Ground Floor 30.ldr
-1 0 -280 -272 -540 0 0 1 0 1 0 -1 0 0 Ground Floor 31.ldr
-1 0 -140 -272 -480 0 0 1 0 1 0 -1 0 0 Ground Floor 32.ldr
-1 0 -140 -272 -600 0 0 1 0 1 0 -1 0 0 Ground Floor 33.ldr
-1 0 -280 -272 -800 1 0 0 0 1 0 0 0 1 Ground Floor 34.ldr
-1 0 -140 -272 -800 1 0 0 0 1 0 0 0 1 Ground Floor 35.ldr
-1 0 320 -208 -860 0 0 -1 0 1 0 1 0 0 Ground Floor 36.ldr
-1 0 0 -232 -860 0 0 -1 0 1 0 1 0 0 Ground Floor 37.ldr
-1 0 -100 -232 -860 0 0 -1 0 1 0 1 0 0 Ground Floor 38.ldr
-1 0 -120 -272 -340 0 0 1 0 1 0 -1 0 0 Ground Floor 39.ldr
-1 0 0 -200 -340 0 0 1 0 1 0 -1 0 0 Ground Floor 40.ldr
-1 0 320 -104 220 0 0 -1 0 1 0 1 0 0 Ground Floor 45.ldr
-1 0 50 -120 210 0 0 -1 0 1 0 1 0 0 Ground Floor -1.ldr
-1 0 -110 -272 -820 0 0 -1 0 1 0 1 0 0 Ground Floor -2.ldr
-1 0 10 -120 -760 0 0 -1 0 1 0 1 0 0 Ground Floor -3.ldr
-1 0 50 -120 -170 0 0 -1 0 1 0 1 0 0 Ground Floor -4.ldr
-1 0 170 -120 -10 0 0 -1 0 1 0 1 0 0 Ground Floor -5.ldr
-1 0 280 -128 -350 1 0 0 0 1 0 0 0 1 Ground Floor Stairs.ldr
+1 0 -120 -96 -860 1 0 0 0 1 0 0 0 1 GroundFloor001.ldr
+1 0 100 -200 -860 1 0 0 0 1 0 0 0 1 GroundFloor002.ldr
+1 0 -120 -200 -860 1 0 0 0 1 0 0 0 1 GroundFloor003.ldr
+1 0 20 -104 -340 -1 0 0 0 1 0 0 0 -1 GroundFloor004.ldr
+1 0 20 -176 -340 -1 0 0 0 1 0 0 0 -1 GroundFloor005.ldr
+1 0 -100 -192 -340 -1 0 0 0 1 0 0 0 -1 GroundFloor006.ldr
+1 0 -140 -104 -720 0 0 1 0 1 0 -1 0 0 GroundFloor007.ldr
+1 0 -140 -176 -540 0 0 1 0 1 0 -1 0 0 GroundFloor008.ldr
+1 0 -140 -248 -540 0 0 1 0 1 0 -1 0 0 GroundFloor009.ldr
+1 0 -320 -104 80 0 0 1 0 1 0 -1 0 0 GroundFloor010.ldr
+1 0 40 -104 60 0 0 -1 0 1 0 1 0 0 GroundFloor011.ldr
+1 0 -660 -248 400 0 0 1 0 1 0 -1 0 0 GroundFloor012.ldr
+1 0 -60 -104 140 0 0 1 0 1 0 -1 0 0 GroundFloor013.ldr
+1 0 -60 -280 0 0 0 1 0 1 0 -1 0 0 GroundFloor014.ldr
+1 0 -340 -264 -360 1 0 0 0 1 0 0 0 1 GroundFloor015.ldr
+1 0 20 -288 240 0 0 1 0 1 0 -1 0 0 GroundFloor016.ldr
+1 0 -280 -264 -360 0 0 1 0 1 0 -1 0 0 GroundFloor020.ldr
+1 0 -280 -264 -660 0 0 1 0 1 0 -1 0 0 GroundFloor021.ldr
+1 0 -280 -264 -720 0 0 1 0 1 0 -1 0 0 GroundFloor022.ldr
+1 0 -140 -264 -360 0 0 1 0 1 0 -1 0 0 GroundFloor023.ldr
+1 0 -140 -264 -720 0 0 1 0 1 0 -1 0 0 GroundFloor024.ldr
+1 0 -280 -264 -480 0 0 1 0 1 0 -1 0 0 GroundFloor025.ldr
+1 0 -280 -264 -600 0 0 1 0 1 0 -1 0 0 GroundFloor026.ldr
+1 0 -140 -264 -420 0 0 1 0 1 0 -1 0 0 GroundFloor027.ldr
+1 0 -140 -264 -540 0 0 1 0 1 0 -1 0 0 GroundFloor028.ldr
+1 0 -140 -264 -660 0 0 1 0 1 0 -1 0 0 GroundFloor029.ldr
+1 0 -280 -272 -420 0 0 1 0 1 0 -1 0 0 GroundFloor030.ldr
+1 0 -280 -272 -540 0 0 1 0 1 0 -1 0 0 GroundFloor031.ldr
+1 0 -140 -272 -480 0 0 1 0 1 0 -1 0 0 GroundFloor032.ldr
+1 0 -140 -272 -600 0 0 1 0 1 0 -1 0 0 GroundFloor033.ldr
+1 0 -280 -272 -800 1 0 0 0 1 0 0 0 1 GroundFloor034.ldr
+1 0 -140 -272 -800 1 0 0 0 1 0 0 0 1 GroundFloor035.ldr
+1 0 320 -208 -860 0 0 -1 0 1 0 1 0 0 GroundFloor036.ldr
+1 0 0 -232 -860 0 0 -1 0 1 0 1 0 0 GroundFloor037.ldr
+1 0 -100 -232 -860 0 0 -1 0 1 0 1 0 0 GroundFloor038.ldr
+1 0 -120 -272 -340 0 0 1 0 1 0 -1 0 0 GroundFloor039.ldr
+1 0 0 -200 -340 0 0 1 0 1 0 -1 0 0 GroundFloor040.ldr
+1 0 320 -104 220 0 0 -1 0 1 0 1 0 0 GroundFloor045.ldr
+1 0 50 -120 210 0 0 -1 0 1 0 1 0 0 GroundFloor101.ldr
+1 0 -110 -272 -820 0 0 -1 0 1 0 1 0 0 GroundFloor102.ldr
+1 0 10 -120 -760 0 0 -1 0 1 0 1 0 0 GroundFloor103.ldr
+1 0 50 -120 -170 0 0 -1 0 1 0 1 0 0 GroundFloor104.ldr
+1 0 170 -120 -10 0 0 -1 0 1 0 1 0 0 GroundFloor105.ldr
+1 0 280 -128 -350 1 0 0 0 1 0 0 0 1 GroundFloorStairs.ldr
 0
 0 FILE Base.ldr
 0 Base
@@ -498,7 +498,7 @@
 0 End of step 11
 0 
 0
-0 FILE Ground Floor 1.ldr
+0 FILE GroundFloor001.ldr
 0 Author: Generate_Wall
 0 Unofficial Model
 0 Rotation Center 0 0 0 1 "Custom"
@@ -746,7 +746,7 @@
 0 WRITE End of step 13
 0 
 0
-0 FILE Ground Floor 2.ldr
+0 FILE GroundFloor002.ldr
 0 Author: Generate_Wall
 0 Unofficial Model
 0 Rotation Center 0 0 0 1 "Custom"
@@ -917,7 +917,7 @@
 0 WRITE End of step 14
 0 
 0
-0 FILE Ground Floor 3.ldr
+0 FILE GroundFloor003.ldr
 0 Author: Generate_Wall
 0 Unofficial Model
 0 Rotation Center 0 0 0 1 "Custom"
@@ -1031,7 +1031,7 @@
 0 WRITE End of step 9
 0 
 0
-0 FILE Ground Floor 4.ldr
+0 FILE GroundFloor004.ldr
 0 Author: Generate_Wall
 0 Unofficial Model
 0 Rotation Center 0 0 0 1 "Custom"
@@ -1247,7 +1247,7 @@
 0 WRITE End of step 10
 0 
 0
-0 FILE Ground Floor 5.ldr
+0 FILE GroundFloor005.ldr
 0 Author: Generate_Wall
 0 Unofficial Model
 0 Rotation Center 0 0 0 1 "Custom"
@@ -1344,7 +1344,7 @@
 0 
 0 
 0
-0 FILE Ground Floor 6.ldr
+0 FILE GroundFloor006.ldr
 0 Author: Generate_Wall
 0 Unofficial Model
 0 Rotation Center 0 0 0 1 "Custom"
@@ -1489,7 +1489,7 @@
 1 0 50 -104 70 0 0 -1 0 1 0 1 0 0 3070B.DAT
 0 
 0
-0 FILE Ground Floor 7.ldr
+0 FILE GroundFloor007.ldr
 0 Author: Generate_Wall
 0 Unofficial Model
 0 Rotation Center 0 0 0 1 "Custom"
@@ -1659,7 +1659,7 @@
 0 WRITE End of step 19
 0 
 0
-0 FILE Ground Floor 8.ldr
+0 FILE GroundFloor008.ldr
 0 Author: Generate_Wall
 0 Unofficial Model
 0 Rotation Center 0 0 0 1 "Custom"
@@ -1788,7 +1788,7 @@
 0 WRITE End of step 11
 0 
 0
-0 FILE Ground Floor 9.ldr
+0 FILE GroundFloor009.ldr
 0 Author: Generate_Wall
 0 Unofficial Model
 0 Rotation Center 0 0 0 1 "Custom"
@@ -1891,7 +1891,7 @@
 1 0 230 -48 -10 1 0 0 0 1 0 0 0 1 3070B.DAT
 0 
 0
-0 FILE Ground Floor 10.ldr
+0 FILE GroundFloor010.ldr
 0 Author: Generate_Wall
 0 Unofficial Model
 0 Rotation Center 0 0 0 1 "Custom"
@@ -2325,7 +2325,7 @@
 0 WRITE End of step 19
 0 
 0
-0 FILE Ground Floor 11.ldr
+0 FILE GroundFloor011.ldr
 0 Author: Generate_Wall
 0 Unofficial Model
 0 Rotation Center 0 0 0 1 "Custom"
@@ -2594,7 +2594,7 @@
 0 WRITE End of step 19
 0 
 0
-0 FILE Ground Floor 12.ldr
+0 FILE GroundFloor012.ldr
 0 Author: Generate_Wall
 0 Unofficial Model
 0 Rotation Center 0 0 0 1 "Custom"
@@ -2744,7 +2744,7 @@
 0 WRITE End of step 4
 0 
 0
-0 FILE Ground Floor 13.ldr
+0 FILE GroundFloor013.ldr
 0 Author: Generate_Wall
 0 Unofficial Model
 0 Rotation Center 0 0 0 1 "Custom"
@@ -3063,7 +3063,7 @@
 1 15 460 -232 110 1 0 0 0 1 0 0 0 1 6636.DAT
 0 
 0
-0 FILE Ground Floor 14.ldr
+0 FILE GroundFloor014.ldr
 0 Author: Generate_Wall
 0 Unofficial Model
 0 Rotation Center 0 0 0 1 "Custom"
@@ -3147,7 +3147,7 @@
 0 
 0 
 0
-0 FILE Ground Floor 15.ldr
+0 FILE GroundFloor015.ldr
 0 Author: Generate_Wall
 0 Unofficial Model
 0 Rotation Center 0 0 0 1 "Custom"
@@ -3282,7 +3282,7 @@
 0 WRITE End of step 3
 0 
 0
-0 FILE Ground Floor 16.ldr
+0 FILE GroundFloor016.ldr
 0 Author: Generate_Wall
 0 Unofficial Model
 0 Rotation Center 0 0 0 1 "Custom"
@@ -3355,7 +3355,7 @@
 0 STEP
 0 WRITE End of step 1
 0
-0 FILE Ground Floor 20.ldr
+0 FILE GroundFloor020.ldr
 0 Author: Generate_Wall
 0 Unofficial Model
 0 Rotation Center 0 0 0 1 "Custom"
@@ -3416,7 +3416,7 @@
 0 STEP
 0 WRITE End of step 3
 0
-0 FILE Ground Floor 21.ldr
+0 FILE GroundFloor021.ldr
 0 Author: Generate_Wall
 0 Unofficial Model
 0 Rotation Center 0 0 0 1 "Custom"
@@ -3477,7 +3477,7 @@
 0 STEP
 0 WRITE End of step 3
 0
-0 FILE Ground Floor 22.ldr
+0 FILE GroundFloor022.ldr
 0 Author: Generate_Wall
 0 Unofficial Model
 0 Rotation Center 0 0 0 1 "Custom"
@@ -3538,7 +3538,7 @@
 0 STEP
 0 WRITE End of step 3
 0
-0 FILE Ground Floor 23.ldr
+0 FILE GroundFloor023.ldr
 0 Author: Generate_Wall
 0 Unofficial Model
 0 Rotation Center 0 0 0 1 "Custom"
@@ -3598,7 +3598,7 @@
 0 STEP
 0 WRITE End of step 3
 0
-0 FILE Ground Floor 24.ldr
+0 FILE GroundFloor024.ldr
 0 Author: Generate_Wall
 0 Unofficial Model
 0 Rotation Center 0 0 0 1 "Custom"
@@ -3658,7 +3658,7 @@
 0 STEP
 0 WRITE End of step 3
 0
-0 FILE Ground Floor 34.ldr
+0 FILE GroundFloor034.ldr
 0 Author: Generate_Wall
 0 Unofficial Model
 0 Rotation Center 0 0 0 1 "Custom"
@@ -3734,7 +3734,7 @@
 0 STEP
 0 WRITE End of step 3
 0
-0 FILE Ground Floor 25.ldr
+0 FILE GroundFloor025.ldr
 0 Author: Generate_Wall
 0 Unofficial Model
 0 Rotation Center 0 0 0 1 "Custom"
@@ -3793,7 +3793,7 @@
 0 STEP
 0 WRITE End of step 3
 0
-0 FILE Ground Floor 26.ldr
+0 FILE GroundFloor026.ldr
 0 Author: Generate_Wall
 0 Unofficial Model
 0 Rotation Center 0 0 0 1 "Custom"
@@ -3872,7 +3872,7 @@
 0 WRITE End of step 3
 0 
 0
-0 FILE Ground Floor 27.ldr
+0 FILE GroundFloor027.ldr
 0 Author: Generate_Wall
 0 Unofficial Model
 0 Rotation Center 0 0 0 1 "Custom"
@@ -3951,7 +3951,7 @@
 0 WRITE End of step 3
 0 
 0
-0 FILE Ground Floor 28.ldr
+0 FILE GroundFloor028.ldr
 0 Author: Generate_Wall
 0 Unofficial Model
 0 Rotation Center 0 0 0 1 "Custom"
@@ -4029,7 +4029,7 @@
 0 WRITE End of step 3
 0 
 0
-0 FILE Ground Floor 29.ldr
+0 FILE GroundFloor029.ldr
 0 Author: Generate_Wall
 0 Unofficial Model
 0 Rotation Center 0 0 0 1 "Custom"
@@ -4108,7 +4108,7 @@
 0 WRITE End of step 3
 0 
 0
-0 FILE Ground Floor 30.ldr
+0 FILE GroundFloor030.ldr
 0 Author: Generate_Wall
 0 Unofficial Model
 0 Rotation Center 0 0 0 1 "Custom"
@@ -4187,7 +4187,7 @@
 0 WRITE End of step 3
 0 
 0
-0 FILE Ground Floor 31.ldr
+0 FILE GroundFloor031.ldr
 0 Author: Generate_Wall
 0 Unofficial Model
 0 Rotation Center 0 0 0 1 "Custom"
@@ -4266,7 +4266,7 @@
 0 WRITE End of step 3
 0 
 0
-0 FILE Ground Floor 32.ldr
+0 FILE GroundFloor032.ldr
 0 Author: Generate_Wall
 0 Unofficial Model
 0 Rotation Center 0 0 0 1 "Custom"
@@ -4345,7 +4345,7 @@
 0 WRITE End of step 3
 0 
 0
-0 FILE Ground Floor 33.ldr
+0 FILE GroundFloor033.ldr
 0 Author: Generate_Wall
 0 Unofficial Model
 0 Rotation Center 0 0 0 1 "Custom"
@@ -4424,7 +4424,7 @@
 0 WRITE End of step 3
 0 
 0
-0 FILE Ground Floor 35.ldr
+0 FILE GroundFloor035.ldr
 0 Author: Generate_Wall
 0 Unofficial Model
 0 Rotation Center 0 0 0 1 "Custom"
@@ -4500,7 +4500,7 @@
 0 STEP
 0 WRITE End of step 3
 0
-0 FILE Ground Floor 36.ldr
+0 FILE GroundFloor036.ldr
 0 Author: Generate_Wall
 0 Unofficial Model
 0 Rotation Center 0 0 0 1 "Custom"
@@ -4609,7 +4609,7 @@
 0 STEP
 0 WRITE End of step 14
 0
-0 FILE Ground Floor 37.ldr
+0 FILE GroundFloor037.ldr
 0 Author: Generate_Wall
 0 Unofficial Model
 0 Rotation Center 0 0 0 1 "Custom"
@@ -4709,7 +4709,7 @@
 0 STEP
 0 WRITE End of step 11
 0
-0 FILE Ground Floor 38.ldr
+0 FILE GroundFloor038.ldr
 0 Author: Generate_Wall
 0 Unofficial Model
 0 Rotation Center 0 0 0 1 "Custom"
@@ -4800,7 +4800,7 @@
 0 STEP
 0 WRITE End of step 8
 0
-0 FILE Ground Floor 39.ldr
+0 FILE GroundFloor039.ldr
 0 Author: Generate_Wall
 0 Unofficial Model
 0 Rotation Center 0 0 0 1 "Custom"
@@ -4873,7 +4873,7 @@
 0 STEP
 0 WRITE End of step 2
 0
-0 FILE Ground Floor 40.ldr
+0 FILE GroundFloor040.ldr
 0 Author: Generate_Wall
 0 Unofficial Model
 0 Rotation Center 0 0 0 1 "Custom"
@@ -4973,7 +4973,7 @@
 0 WRITE End of step 10
 0 
 0
-0 FILE Ground Floor 45.ldr
+0 FILE GroundFloor045.ldr
 0 Author: Generate_Wall
 0 Unofficial Model
 0 Rotation Center 0 0 0 1 "Custom"
@@ -5115,7 +5115,7 @@
 0 STEP
 0 WRITE End of step 25
 0
-0 FILE Ground Floor -1.ldr
+0 FILE GroundFloor101.ldr
 0 Untitled
 0 Name: GREC20~1.LDR
 0 Author: MLCad
@@ -5237,7 +5237,7 @@
 0 WRITE End of step 13
 0 
 0
-0 FILE Ground Floor -2.ldr
+0 FILE GroundFloor102.ldr
 0 Untitled
 0 Name: GRE030~1.LDR
 0 Author: MLCad
@@ -5350,7 +5350,7 @@
 0 WRITE End of step 6
 0 
 0
-0 FILE Ground Floor -3.ldr
+0 FILE GroundFloor103.ldr
 0 Untitled
 0 Name: GRE430~1.LDR
 0 Author: MLCad
@@ -5513,7 +5513,7 @@
 1 15 360 -216 0 1 0 0 0 1 0 0 0 1 3069B.DAT
 0 
 0
-0 FILE Ground Floor -4.ldr
+0 FILE GroundFloor104.ldr
 0 Untitled
 0 Name: GRE830~1.LDR
 0 Author: MLCad
@@ -5645,7 +5645,7 @@
 1 15 90 -216 0 -1 0 0 0 1 0 0 0 -1 6636.DAT
 0 
 0
-0 FILE Ground Floor -5.ldr
+0 FILE GroundFloor105.ldr
 0 Untitled
 0 Name: GREC30~1.LDR
 0 Author: MLCad
@@ -5891,7 +5891,7 @@
 0 
 0 
 0
-0 FILE Ground Floor Stairs.ldr
+0 FILE GroundFloorStairs.ldr
 0 Untitled
 0 Name: stairs.ldr
 0 Author: MLCad
