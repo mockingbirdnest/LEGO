@@ -9,7 +9,8 @@ package Options is
 
     type Crossover_Option is range 1 .. 2;
 
-    type Parts_Option is (Plates, Tiles);
+    type Parts_Option is (Plates_1Xn, Plates_2Xn, Tiles);
+    subtype Plates is Parts_Option range Plates_1Xn .. Plates_2Xn;
 
     type Position_Array is array (Positive range <>) of Natural;
     type Positions is access Position_Array;
@@ -44,7 +45,7 @@ package Options is
     Height      : Positive           := 10;
     Left        : Constraint;
     Mutations   : Float              := 0.001;
-    Parts       : Parts_Option       := Plates;
+    Parts       : Parts_Option       := Plates_1Xn;
     Population  : Positive           := 1000;
     Right       : Constraint;
     Seed        : Integer            := 42;

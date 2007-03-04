@@ -11,6 +11,7 @@ procedure Generate_Wall is
 
     use type Options.Constraint;
     use type Options.Constraint_Array;
+    use type Options.Parts_Option;
     use type Options.Positions;
     use type Options.Visibility_Option;
 
@@ -18,51 +19,154 @@ procedure Generate_Wall is
 
     Color_Generator : Anfr.Generator;
 
-    Q : constant array (Lego.Color range Lego.Brown .. Lego.Medium_Orange,
-                        Lego.Part)
-                    of Float :=
-       ((0.0, 0.0930782, 0.162234, 0.185097, 0.17991,
-         0.0734287, 0.249504, 0.199671, 0.163888, 0.199025),
-        (0.194719, 0.373236, 0.0, 0.0, 0.0,
-         0.464175, 0.0, 0.0, 0.175684, 0.0),
-        (0.153331, 0.0455786, 0.143734, 0.139848, 0.118911,
-         0.00717916, 0.0, 0.198671, 0.0, 0.0),
-        (0.164624, 0.134984, 0.178555, 0.225018, 0.233726,
-         0.131876, 0.250165, 0.200553, 0.165653, 0.200789),
-        (0.164624, 0.134984, 0.178555, 0.225018, 0.233726,
-         0.131876, 0.250165, 0.200553, 0.165653, 0.200789),
-        (0.164624, 0.134984, 0.178555, 0.225018, 0.233726,
-         0.131876, 0.250165, 0.200553, 0.165653, 0.200789),
-        (0.158077, 0.0831548, 0.158369, 0.0, 0.0,
-         0.0595881, 0.0, 0.0, 0.16347, 0.198607));
-    -- ((0.0, 0.0964228, 0.16123, 0.181568, 0.175153,
-    --   0.0780935, 0.249504, 0.199593, 0.164183, 0.199051),
-    --  (0.190301, 0.337705, 0.0, 0.0, 0.0,
-    --   0.414619, 0.0, 0.0, 0.174342, 0.0),
-    --  (0.156168, 0.0674792, 0.149957, 0.153996, 0.137983,
-    --   0.0377248, 0.0, 0.198983, 0.0, 0.0),
-    --  (0.165116, 0.138318, 0.177547, 0.221479, 0.228955,
-    --   0.136526, 0.250165, 0.200475, 0.165947, 0.200815),
-    --  (0.165116, 0.138318, 0.177547, 0.221479, 0.228955,
-    --   0.136526, 0.250165, 0.200475, 0.165947, 0.200815),
-    --  (0.165116, 0.138318, 0.177547, 0.221479, 0.228955,
-    --   0.136526, 0.250165, 0.200475, 0.165947, 0.200815),
-    --  (0.158184, 0.0834396, 0.156173, 0.0, 0.0,
-    --   0.0599854, 0.0, 0.0, 0.163636, 0.198504));
+    Q_1Xn : constant array (Lego.Color range Lego.Brown .. Lego.Medium_Orange,
+                            Lego.Plate_1Xn) of Long_Float :=
+       (Lego.Brown => (
+                       Lego.Plate_2X2_Corner => -0.000000,
+                       Lego.Plate_1X1 => 0.162231,
+                       Lego.Plate_1X3 => 0.185095,
+                       Lego.Plate_1X4 => 0.073424,
+                       Lego.Plate_1X6 => 0.179917,
+                       Lego.Plate_1X2 => 0.093076),
+        Lego.Dark_Orange => (
+                             Lego.Plate_2X2_Corner => 0.194670,
+                             Lego.Plate_1X1 => 0.000000,
+                             Lego.Plate_1X3 => 0.000000,
+                             Lego.Plate_1X4 => 0.464179,
+                             Lego.Plate_1X6 => 0.000000,
+                             Lego.Plate_1X2 => 0.373237),
+        Lego.Orange => (
+                        Lego.Plate_2X2_Corner => 0.153353,
+                        Lego.Plate_1X1 => 0.143723,
+                        Lego.Plate_1X3 => 0.139839,
+                        Lego.Plate_1X4 => 0.007166,
+                        Lego.Plate_1X6 => 0.118940,
+                        Lego.Plate_1X2 => 0.045570),
+        Lego.Dark_Red => (
+                          Lego.Plate_2X2_Corner => 0.164628,
+                          Lego.Plate_1X1 => 0.178560,
+                          Lego.Plate_1X3 => 0.225022,
+                          Lego.Plate_1X4 => 0.131881,
+                          Lego.Plate_1X6 => 0.233714,
+                          Lego.Plate_1X2 => 0.134987),
+        Lego.Red => (
+                     Lego.Plate_2X2_Corner => 0.164628,
+                     Lego.Plate_1X1 => 0.178560,
+                     Lego.Plate_1X3 => 0.225022,
+                     Lego.Plate_1X4 => 0.131881,
+                     Lego.Plate_1X6 => 0.233714,
+                     Lego.Plate_1X2 => 0.134987),
+        Lego.Reddish_Brown => (
+                               Lego.Plate_2X2_Corner => 0.164628,
+                               Lego.Plate_1X1 => 0.178560,
+                               Lego.Plate_1X3 => 0.225022,
+                               Lego.Plate_1X4 => 0.131881,
+                               Lego.Plate_1X6 => 0.233714,
+                               Lego.Plate_1X2 => 0.134987),
+        Lego.Medium_Orange => (
+                               Lego.Plate_2X2_Corner => 0.158092,
+                               Lego.Plate_1X1 => 0.158366,
+                               Lego.Plate_1X3 => 0.000000,
+                               Lego.Plate_1X4 => 0.059588,
+                               Lego.Plate_1X6 => 0.000000,
+                               Lego.Plate_1X2 => 0.083155));
 
-    Pleasantness : array (Lego.Color) of Float :=
-       (Lego.Bright_Pink | Lego.Clear | Lego.Light_Orange |
-        Lego.Light_Pink | Lego.Magenta | Lego.Pink |
-        Lego.Sand_Red | Lego.Tan | Lego.Very_Light_Orange => 0.0,
+    Q_2Xn : constant array (Lego.Color range Lego.Brown .. Lego.Medium_Orange,
+                            Lego.Plate_2Xn) of Long_Float :=
+       (Lego.Brown => (
+                       Lego.Plate_1X2 => 0.132791,
+                       Lego.Plate_2X2 => 0.127535,
+                       Lego.Plate_2X3 => 0.119127,
+                       Lego.Plate_2X4 => 0.108398,
+                       Lego.Plate_2X6 => 0.160232),
+        Lego.Dark_Orange => (
+                             Lego.Plate_1X2 => 0.191019,
+                             Lego.Plate_2X2 => 0.271445,
+                             Lego.Plate_2X3 => 0.256391,
+                             Lego.Plate_2X4 => 0.307720,
+                             Lego.Plate_2X6 => 0.000000),
+        Lego.Orange => (
+                        Lego.Plate_1X2 => 0.115297,
+                        Lego.Plate_2X2 => 0.084300,
+                        Lego.Plate_2X3 => 0.077889,
+                        Lego.Plate_2X4 => 0.048516,
+                        Lego.Plate_2X6 => 0.105038),
+        Lego.Dark_Red => (
+                          Lego.Plate_1X2 => 0.150879,
+                          Lego.Plate_2X2 => 0.172240,
+                          Lego.Plate_2X3 => 0.161768,
+                          Lego.Plate_2X4 => 0.170318,
+                          Lego.Plate_2X6 => 0.217303),
+        Lego.Red => (
+                     Lego.Plate_1X2 => 0.150879,
+                     Lego.Plate_2X2 => 0.172240,
+                     Lego.Plate_2X3 => 0.161768,
+                     Lego.Plate_2X4 => 0.170318,
+                     Lego.Plate_2X6 => 0.217303),
+        Lego.Reddish_Brown => (
+                               Lego.Plate_1X2 => 0.150879,
+                               Lego.Plate_2X2 => 0.172240,
+                               Lego.Plate_2X3 => 0.161768,
+                               Lego.Plate_2X4 => 0.170318,
+                               Lego.Plate_2X6 => 0.217303),
+        Lego.Medium_Orange => (
+                               Lego.Plate_1X2 => 0.108255,
+                               Lego.Plate_2X2 => 0.000000,
+                               Lego.Plate_2X3 => 0.061289,
+                               Lego.Plate_2X4 => 0.024412,
+                               Lego.Plate_2X6 => 0.082821));
 
-        Lego.Brown => 0.13,
-        Lego.Dark_Orange => 0.18,
-        Lego.Dark_Red => 0.18,
-        Lego.Medium_Orange => 0.05,
-        Lego.Orange => 0.10,
-        Lego.Red => 0.18,
-        Lego.Reddish_Brown => 0.18
-        );
+    Q_Tile : constant array (Lego.Color range Lego.Brown .. Lego.Medium_Orange,
+                             Lego.Tile) of Long_Float :=
+       (Lego.Brown => (
+                       Lego.Tile_1X1 => 0.226587,
+                       Lego.Tile_1X2 => 0.122846,
+                       Lego.Tile_1X4 => 0.034822,
+                       Lego.Tile_1X6 => 0.194839),
+        Lego.Dark_Orange => (
+                             Lego.Tile_1X1 => -0.000000,
+                             Lego.Tile_1X2 => 0.000000,
+                             Lego.Tile_1X4 => 0.627959,
+                             Lego.Tile_1X6 => 0.000000),
+        Lego.Orange => (
+                        Lego.Tile_1X1 => 0.000000,
+                        Lego.Tile_1X2 => 0.328257,
+                        Lego.Tile_1X4 => 0.000000,
+                        Lego.Tile_1X6 => -0.000000),
+        Lego.Dark_Red => (
+                          Lego.Tile_1X1 => 0.273248,
+                          Lego.Tile_1X2 => 0.212707,
+                          Lego.Tile_1X4 => -0.000000,
+                          Lego.Tile_1X6 => 0.304771),
+        Lego.Red => (
+                     Lego.Tile_1X1 => 0.250083,
+                     Lego.Tile_1X2 => 0.168095,
+                     Lego.Tile_1X4 => 0.094139,
+                     Lego.Tile_1X6 => 0.250195),
+        Lego.Reddish_Brown => (
+                               Lego.Tile_1X1 => 0.250083,
+                               Lego.Tile_1X2 => 0.168095,
+                               Lego.Tile_1X4 => 0.094139,
+                               Lego.Tile_1X6 => 0.250195),
+        Lego.Medium_Orange => (
+                               Lego.Tile_1X1 => 0.000000,
+                               Lego.Tile_1X2 => 0.000000,
+                               Lego.Tile_1X4 => 0.148939,
+                               Lego.Tile_1X6 => 0.000000));
+
+    -- Pleasantness : array (Lego.Color) of Float :=
+    --    (Lego.Bright_Pink | Lego.Clear | Lego.Light_Orange |
+    --     Lego.Light_Pink | Lego.Magenta | Lego.Pink |
+    --     Lego.Sand_Red | Lego.Tan | Lego.Very_Light_Orange => 0.0,
+    -- 
+    --     Lego.Brown => 0.13,
+    --     Lego.Dark_Orange => 0.18,
+    --     Lego.Dark_Red => 0.18,
+    --     Lego.Medium_Orange => 0.05,
+    --     Lego.Orange => 0.10,
+    --     Lego.Red => 0.18,
+    --     Lego.Reddish_Brown => 0.18
+    --     );
 
 
     Bottom      : constant Options.Constraint         := Options.Bottom;
@@ -189,7 +293,7 @@ procedure Generate_Wall is
                     return 0.0;
                 when 3 =>
                     case Parts is
-                        when Options.Plates =>
+                        when Options.Plates_1Xn | Options.Plates_2Xn =>
                             return 0.0;
                         when Options.Tiles =>
                             if (Bottom /= null and then Row = 1) or else
@@ -264,25 +368,44 @@ procedure Generate_Wall is
                         if Column = Corner (J) then
 
                             -- We are at the separation immediately after the stud for a corner.
-                            if Genome (I) or else Genome (I - 1) then
+                            if Parts = Options.Plates_2Xn then
+                                if Column = 2 or else
+                                   Genome (I - 2) or else
+                                   Column = Positive
+                                               (Width_Minus_One) or else
+                                   Genome (I + 1) then
 
-                                -- This is an 1xN or Nx1 corner.  Fine.
-                                null;
-                            elsif (Column = 2 or else
-                                   Genome (I - 2)) and then
-                                  (Column = Positive (Width_Minus_One) or else
-                                   Genome (I + 1)) then
-
-                                -- This case can be covered by a 2x2 corner, but only for plates.
-                                case Parts is
-                                    when Options.Plates =>
-                                        null;
-                                    when Options.Tiles =>
-                                        Result := Result + Corner_Cost;
-                                end case;
+                                    -- This is a 2xN or Nx2 corner.  Fine.
+                                    null;
+                                else
+                                    -- This is not a corner that we like.
+                                    Result := Result + Corner_Cost;
+                                end if;
                             else
-                                -- This is not a corner that we like.
-                                Result := Result + Corner_Cost;
+                                if Genome (I) or else Genome (I - 1) then
+
+                                    -- This is an 1xN or Nx1 corner.  Fine.
+                                    null;
+                                elsif (Column = 2 or else
+                                       Genome (I - 2)) and then
+                                      (Column = Positive
+                                                   (Width_Minus_One) or else
+                                       Genome (I + 1)) then
+
+                                    -- This case can be covered by a 2x2 corner, but only for plates.
+                                    case Parts is
+                                        when Options.Plates_1Xn =>
+                                            null;
+                                        when Options.Tiles =>
+                                            Result := Result + Corner_Cost;
+                                        when Options.Plates_2Xn =>
+                                            pragma Assert (False);
+                                            null;
+                                    end case;
+                                else
+                                    -- This is not a corner that we like.
+                                    Result := Result + Corner_Cost;
+                                end if;
                             end if;
                         end if;
                     end loop;
@@ -659,7 +782,19 @@ begin
         type Horizontal is (X_Axis, Z_Axis);
         Other        : constant array (Horizontal) of Horizontal :=
            (X_Axis => Z_Axis, Z_Axis => X_Axis);
-        Cumulative_Q : array (Q'Range (1), Q'Range (2)) of Float;
+        Cumulative_Q : array (Q_1Xn'Range (1), Lego.Part) of Long_Float;
+
+        function Q (C : Lego.Color; P : Lego.Part) return Long_Float is
+        begin
+            case Options.Parts is
+                when Options.Plates_1Xn =>
+                    return Q_1Xn (C, P);
+                when Options.Plates_2Xn =>
+                    return Q_2Xn (C, P);
+                when Options.Tiles =>
+                    return Q_Tile (C, P);
+            end case;
+        end Q;
 
         type Output_State is
             record
@@ -684,8 +819,8 @@ begin
                   (Top /= null and then S.Y = 1 - Height);
             Part_Width    : constant Positive :=
                Last_Stud - First_Stud + 1;
-            Use_Plates    : constant Boolean  :=
-               Parts = Options.Plates or else S.Y /= 1 - Height;
+            Use_Tiles     : constant Boolean  :=
+               Parts = Options.Tiles and then S.Y = 1 - Height;
 
             C           : Lego.Color;
             Corner_Stud : Natural := 0;
@@ -696,38 +831,21 @@ begin
             Skip        : Boolean;
 
             function Random (P : Lego.Part) return Lego.Color is
-                R : Float range 0.0 .. 1.0;
+                R : Long_Float range 0.0 .. 1.0;
                 use type Lego.Color;
             begin
-                loop
 
-                    -- The last entry in Cumulative_Q will be very close to 1.0, but it
-                    -- may not be exactly 1.0 because of rounding.  Adjust the random
-                    -- number to avoid leaving a tiny hole.
-                    R := Anfr.Random (Color_Generator) *
-                            Cumulative_Q (Cumulative_Q'Last (1), P);
-
-                    Scan_Cumulative_Q:
-                        for Color in Cumulative_Q'Range (1) loop
-                            if Q (Color, P) > 0.0 then
-                                if Cumulative_Q (Color, P) >= R then
-
-                                    -- Embarrassment: the  conditional probabilities were computed using
-                                    -- a different availability matrix than the current one as far as tiles
-                                    -- are concerned.  So it is possible for Random to produce unavailable
-                                    -- parts in rare cases, something which would not happen if the
-                                    -- conditional probabilities were right (Tile_1x4 DarkRed is one such
-                                    -- example).  When that happens, we just try again. 
-                                    if Lego.Available (Color, P) then
-                                        return Color;
-                                    else
-                                        pragma Assert (P in Lego.Tile_1X1 ..
-                                                               Lego.Tile_1X6);
-                                        exit Scan_Cumulative_Q;
-                                    end if;
-                                end if;
-                            end if;
-                        end loop Scan_Cumulative_Q;
+                -- The last entry in Cumulative_Q will be very close to 1.0, but it
+                -- may not be exactly 1.0 because of rounding.  Adjust the random
+                -- number to avoid leaving a tiny hole.
+                R := Long_Float (Anfr.Random (Color_Generator)) *
+                        Cumulative_Q (Cumulative_Q'Last (1), P);
+                for Color in Cumulative_Q'Range (1) loop
+                    if Q (Color, P) > 0.0 then
+                        if Cumulative_Q (Color, P) >= R then
+                            return Color;
+                        end if;
+                    end if;
                 end loop;
             end Random;
 
@@ -752,17 +870,27 @@ begin
                          Options.Is_In ((First_Stud + Last_Stud) / 2, Corner);
             case Part_Width is
                 when 1 =>
-                    if Use_Plates then
-                        P := Lego.Plate_1X1;
-                    else
+                    if Use_Tiles then
                         P := Lego.Tile_1X1;
+                    else
+                        case Parts is
+                            when Options.Plates_1Xn | Options.Tiles =>
+                                P := Lego.Plate_1X1;
+                            when Options.Plates_2Xn =>
+                                P := Lego.Plate_1X2; -- Orientation!!!
+                        end case;
                     end if;
                     Is_Tee := Options.Is_In (First_Stud, Tee);
                 when 2 =>
-                    if Use_Plates then
-                        P := Lego.Plate_1X2;
-                    else
+                    if Use_Tiles then
                         P := Lego.Tile_1X2;
+                    else
+                        case Parts is
+                            when Options.Plates_1Xn | Options.Tiles =>
+                                P := Lego.Plate_1X2;
+                            when Options.Plates_2Xn =>
+                                P := Lego.Plate_2X2;
+                        end case;
                     end if;
                     Is_Tee := Options.Is_In (First_Stud, Tee) or else
                                  Options.Is_In (Last_Stud, Tee);
@@ -770,19 +898,34 @@ begin
                     if Is_2X2 then
                         P := Lego.Plate_2X2_Corner;
                     else
-                        P := Lego.Plate_1X3;
+                        case Parts is
+                            when Options.Plates_1Xn | Options.Tiles =>
+                                P := Lego.Plate_1X3;
+                            when Options.Plates_2Xn =>
+                                P := Lego.Plate_2X3;
+                        end case;
                     end if;
                 when 4 =>
-                    if Use_Plates then
-                        P := Lego.Plate_1X4;
-                    else
+                    if Use_Tiles then
                         P := Lego.Tile_1X4;
+                    else
+                        case Parts is
+                            when Options.Plates_1Xn | Options.Tiles =>
+                                P := Lego.Plate_1X4;
+                            when Options.Plates_2Xn =>
+                                P := Lego.Plate_2X4;
+                        end case;
                     end if;
                 when 6 =>
-                    if Use_Plates then
-                        P := Lego.Plate_1X6;
-                    else
+                    if Use_Tiles then
                         P := Lego.Tile_1X6;
+                    else
+                        case Parts is
+                            when Options.Plates_1Xn | Options.Tiles =>
+                                P := Lego.Plate_1X6;
+                            when Options.Plates_2Xn =>
+                                P := Lego.Plate_2X6;
+                        end case;
                     end if;
                 when others =>
                     for I in First_Stud .. Last_Stud loop
@@ -939,17 +1082,33 @@ begin
 
         use type Lego.Color;
     begin
-        for Part in Cumulative_Q'Range (2) loop
-            for Color in Cumulative_Q'Range (1) loop
-                if Color = Cumulative_Q'First (1) then
-                    Cumulative_Q (Color, Part) := Q (Color, Part);
-                else
-                    Cumulative_Q (Color, Part) :=
-                       Cumulative_Q (Lego.Color'Pred (Color), Part) +
-                          Q (Color, Part);
-                end if;
+
+        declare
+            Part_First, Part_Last : Lego.Part;
+        begin
+            case Options.Parts is
+                when Options.Plates_1Xn =>
+                    Part_First := Lego.Plate_1Xn'First;
+                    Part_Last  := Lego.Plate_1Xn'Last;
+                when Options.Plates_2Xn =>
+                    Part_First := Lego.Plate_2Xn'First;
+                    Part_Last  := Lego.Plate_2Xn'Last;
+                when Options.Tiles =>
+                    Part_First := Lego.Tile'First;
+                    Part_Last  := Lego.Tile'Last;
+            end case;
+            for Part in Part_First .. Part_Last loop
+                for Color in Cumulative_Q'Range (1) loop
+                    if Color = Cumulative_Q'First (1) then
+                        Cumulative_Q (Color, Part) := Q (Color, Part);
+                    else
+                        Cumulative_Q (Color, Part) :=
+                           Cumulative_Q (Lego.Color'Pred (Color), Part) +
+                              Q (Color, Part);
+                    end if;
+                end loop;
             end loop;
-        end loop;
+        end;
 
         Output_Wall (Mozart);
     end;

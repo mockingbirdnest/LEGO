@@ -96,6 +96,278 @@ package body Lego is
                               Blue => 16#A0#)
         );
 
+    function Available (C : Color; P : Part) return Boolean is
+    begin
+        case P is
+            when Plate_2X2_Corner =>
+                case C is
+                    when Brown =>
+                        return False;
+                    when Dark_Orange =>
+                        return True;
+                    when Orange =>
+                        return True;
+                    when Dark_Red =>
+                        return True;
+                    when Red =>
+                        return True;
+                    when Reddish_Brown =>
+                        return True;
+                    when Medium_Orange =>
+                        return True;
+                    when others =>
+                        return False;
+                end case;
+            when Plate_1X1 =>
+                case C is
+                    when Brown =>
+                        return True;
+                    when Dark_Orange =>
+                        return False;
+                    when Orange =>
+                        return True;
+                    when Dark_Red =>
+                        return True;
+                    when Red =>
+                        return True;
+                    when Reddish_Brown =>
+                        return True;
+                    when Medium_Orange =>
+                        return True;
+                    when others =>
+                        return False;
+                end case;
+            when Plate_1X2 =>
+                case C is
+                    when Brown =>
+                        return True;
+                    when Dark_Orange =>
+                        return True;
+                    when Orange =>
+                        return True;
+                    when Dark_Red =>
+                        return True;
+                    when Red =>
+                        return True;
+                    when Reddish_Brown =>
+                        return True;
+                    when Medium_Orange =>
+                        return True;
+                    when others =>
+                        return False;
+                end case;
+            when Plate_1X3 =>
+                case C is
+                    when Brown =>
+                        return True;
+                    when Dark_Orange =>
+                        return False;
+                    when Orange =>
+                        return True;
+                    when Dark_Red =>
+                        return True;
+                    when Red =>
+                        return True;
+                    when Reddish_Brown =>
+                        return True;
+                    when Medium_Orange =>
+                        return False;
+                    when others =>
+                        return False;
+                end case;
+            when Plate_1X4 =>
+                case C is
+                    when Brown =>
+                        return True;
+                    when Dark_Orange =>
+                        return True;
+                    when Orange =>
+                        return True;
+                    when Dark_Red =>
+                        return True;
+                    when Red =>
+                        return True;
+                    when Reddish_Brown =>
+                        return True;
+                    when Medium_Orange =>
+                        return True;
+                    when others =>
+                        return False;
+                end case;
+            when Plate_1X6 =>
+                case C is
+                    when Brown =>
+                        return True;
+                    when Dark_Orange =>
+                        return False;
+                    when Orange =>
+                        return True;
+                    when Dark_Red =>
+                        return True;
+                    when Red =>
+                        return True;
+                    when Reddish_Brown =>
+                        return True;
+                    when Medium_Orange =>
+                        return False;
+                    when others =>
+                        return False;
+                end case;
+            when Plate_2X2 =>
+                case C is
+                    when Brown =>
+                        return True;
+                    when Dark_Orange =>
+                        return True;
+                    when Orange =>
+                        return True;
+                    when Dark_Red =>
+                        return True;
+                    when Red =>
+                        return True;
+                    when Reddish_Brown =>
+                        return True;
+                    when Medium_Orange =>
+                        return False;
+                    when others =>
+                        return False;
+                end case;
+            when Plate_2X3 =>
+                case C is
+                    when Brown =>
+                        return True;
+                    when Dark_Orange =>
+                        return True;
+                    when Orange =>
+                        return True;
+                    when Dark_Red =>
+                        return True;
+                    when Red =>
+                        return True;
+                    when Reddish_Brown =>
+                        return True;
+                    when Medium_Orange =>
+                        return True;
+                    when others =>
+                        return False;
+                end case;
+            when Plate_2X4 =>
+                case C is
+                    when Brown =>
+                        return True;
+                    when Dark_Orange =>
+                        return True;
+                    when Orange =>
+                        return True;
+                    when Dark_Red =>
+                        return True;
+                    when Red =>
+                        return True;
+                    when Reddish_Brown =>
+                        return True;
+                    when Medium_Orange =>
+                        return True;
+                    when others =>
+                        return False;
+                end case;
+            when Plate_2X6 =>
+                case C is
+                    when Brown =>
+                        return True;
+                    when Dark_Orange =>
+                        return False;
+                    when Orange =>
+                        return True;
+                    when Dark_Red =>
+                        return True;
+                    when Red =>
+                        return True;
+                    when Reddish_Brown =>
+                        return True;
+                    when Medium_Orange =>
+                        return True;
+                    when others =>
+                        return False;
+                end case;
+            when Tile_1X1 =>
+                case C is
+                    when Brown =>
+                        return True;
+                    when Dark_Orange =>
+                        return False;
+                    when Orange =>
+                        return False;
+                    when Dark_Red =>
+                        return True;
+                    when Red =>
+                        return True;
+                    when Reddish_Brown =>
+                        return True;
+                    when Medium_Orange =>
+                        return False;
+                    when others =>
+                        return False;
+                end case;
+            when Tile_1X2 =>
+                case C is
+                    when Brown =>
+                        return True;
+                    when Dark_Orange =>
+                        return False;
+                    when Orange =>
+                        return True;
+                    when Dark_Red =>
+                        return True;
+                    when Red =>
+                        return True;
+                    when Reddish_Brown =>
+                        return True;
+                    when Medium_Orange =>
+                        return False;
+                    when others =>
+                        return False;
+                end case;
+            when Tile_1X4 =>
+                case C is
+                    when Brown =>
+                        return True;
+                    when Dark_Orange =>
+                        return True;
+                    when Orange =>
+                        return False;
+                    when Dark_Red =>
+                        return False;
+                    when Red =>
+                        return True;
+                    when Reddish_Brown =>
+                        return True;
+                    when Medium_Orange =>
+                        return True;
+                    when others =>
+                        return False;
+                end case;
+            when Tile_1X6 =>
+                case C is
+                    when Brown =>
+                        return True;
+                    when Dark_Orange =>
+                        return False;
+                    when Orange =>
+                        return False;
+                    when Dark_Red =>
+                        return True;
+                    when Red =>
+                        return True;
+                    when Reddish_Brown =>
+                        return True;
+                    when Medium_Orange =>
+                        return False;
+                    when others =>
+                        return False;
+                end case;
+        end case;
+    end Available;
+
     function Direct_Image (C : Color) return String is
         Hex : array (Rgb_Intensity range 0 .. 15) of Character :=
            "0123456789ABCDEF";
@@ -146,16 +418,24 @@ package body Lego is
         case P is
             when Plate_2X2_Corner =>
                 return "2420";
-            when Plate_1X2 =>
-                return "3023";
             when Plate_1X1 =>
                 return "3024";
+            when Plate_1X2 =>
+                return "3023";
             when Plate_1X3 =>
                 return "3623";
-            when Plate_1X6 =>
-                return "3666";
             when Plate_1X4 =>
                 return "3710";
+            when Plate_1X6 =>
+                return "3666";
+            when Plate_2X2 =>
+                return "3022";
+            when Plate_2X3 =>
+                return "3021";
+            when Plate_2X4 =>
+                return "3020";
+            when Plate_2X6 =>
+                return "3795";
             when Tile_1X1 =>
                 return "3070B";
             when Tile_1X2 =>

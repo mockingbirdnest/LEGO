@@ -159,7 +159,7 @@ package body Options is
                   "  /output filename" & Ht & Ht &
                      "Output file; will be overwritten; mandatory");
         Put_Line (Current_Error,
-                  "  /parts plates|tiles:plates" & Ht & Ht &
+                  "  /parts plates|tiles:plates_1xN:plates_2xN" & Ht & Ht &
                      "Kind of LEGO parts to generate");
         Put_Line (Current_Error,
                   "  /population n:1000" & Ht & Ht &
@@ -238,7 +238,13 @@ package body Options is
                         Output     := Asu.To_Unbounded_String (Value);
                         Has_Output := True;
                     elsif Param = "/parts" then
-                        Parts := Parts_Option'Value (Value);
+                        begin
+                            Parts := Parts_Option'Value (Value);
+                        exception
+                            when Constraint_Error =>
+                                -- For compatibility, we also support /parts plates.
+                                Parts := Parts_Option'Value (Value & "_1xN");
+                        end;
                     elsif Param = "/pop" or else Param = "/population" then
                         Population := Positive'Value (Value);
                     elsif Param = "/right" then
@@ -293,12 +299,16 @@ package body Options is
             end loop;
         end if;
         if Tee /= null then
-            for I in Tee'Range loop
-                if Tee (I) not in 1 .. Width then
-                    Usage ("Misplaced tee" & Integer'Image (Tee (I)));
-                    return;
-                end if;
-            end loop;
+            if Parts = Plates_1Xn then
+                for I in Tee'Range loop
+                    if Tee (I) not in 1 .. Width then
+                        Usage ("Misplaced tee" & Integer'Image (Tee (I)));
+                        return;
+                    end if;
+                end loop;
+            else
+                Usage ("Tees not allowed for " & Parts_Option'Image (Parts));
+            end if;
         end if;
         if Bottom /= null then
             declare
