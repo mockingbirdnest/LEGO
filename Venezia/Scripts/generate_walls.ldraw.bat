@@ -3,6 +3,7 @@ set COLOR=/color ldraw
 set NAME=ldraw
 set SHOW=/skip left_right /skip top_bottom /show tees
 set TRACE=/trace age /trace mozart
+
 rem generate_wall %COLOR% %SHOW% %TRACE% /w 22 /h 13 /gen 500 /bottom 1344442 /top 61432141 /tee 1 /tee 7                   /out %NAME%1.ldr
 rem generate_wall %COLOR% %SHOW% %TRACE% /w 5  /h 14 /bottom 131                                                            /out %NAME%2.ldr
 rem generate_wall %COLOR% %SHOW% %TRACE% /w 6  /h 3  /bottom 1311 /top 141 /tee 1                                           /out %NAME%3.ldr
@@ -32,7 +33,10 @@ rem generate_wall %COLOR% %SHOW% %TRACE% /w 1 /h 8  /colorseed 38               
 rem generate_wall %COLOR% %SHOW% %TRACE% /w 1 /h 2  /colorseed 39                                                           /out %NAME%39.ldr
 rem generate_wall %COLOR% %SHOW% %TRACE% /w 1 /h 9  /colorseed 41                                                           /out %NAME%40.ldr
 rem generate_wall %COLOR% %SHOW% %TRACE% /w 26 /h 5 /seed 41 /bottom 14166431 /corner 12 /tee 1 /tee 11 /tee 13 /left 11000 /out %NAME%41.ldr
-generate_wall %COLOR% %SHOW% %TRACE% /w 30 /h 1  /bottom 126224161122 /corner 24 /parts tiles                           /out %NAME%42.ldr
-generate_wall %COLOR% %SHOW% %TRACE% /w 78 /h 1  /bottom 12234241141141116216661431621 /corner 13 /corner 24 /corner 49 /parts tiles /out %NAME%43.ldr
-generate_wall %COLOR% %SHOW% %TRACE% /w 26 /h 1 /bottom 1131132132422 /corner 12 /parts tiles                          /out %NAME%44.ldr
+rem generate_wall %COLOR% %SHOW% %TRACE% /w 30 /h 1 /bottom 126224161122 /corner 24 /parts tiles                            /out %NAME%42.ldr
+rem generate_wall %COLOR% %SHOW% %TRACE% /w 78 /h 1 /seed 43000 /bottom 12234241141141116216661431621 /corner 13 /corner 24 /corner 49 /parts tiles /out %NAME%43.ldr
+rem generate_wall %COLOR% %SHOW% %TRACE% /w 26 /h 1 /bottom 1131132132422 /corner 12 /parts tiles                           /out %NAME%44.ldr
 rem generate_wall %COLOR% %SHOW% %TRACE% /w 1 /h 25 /colorseed 45                                                           /out %NAME%45.ldr
+
+rem generate_wall %COLOR% %SHOW% %TRACE% /w 26 /h 1 /bottom 122112242144 /corner 15 /colorseed 201 /parts plates_2xn        /out %NAME%201.ldr
+generate_wall %COLOR% %SHOW% %TRACE% /w 66 /h 1 /seed 202 /bottom 22214122421211114261261461121 /corner 30 /corner 55 /colorseed 202 /parts plates_2xn        /out %NAME%202.ldr

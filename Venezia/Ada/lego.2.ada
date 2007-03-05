@@ -256,7 +256,7 @@ package body Lego is
                     when Brown =>
                         return True;
                     when Dark_Orange =>
-                        return True;
+                        return False; -- Not ordered.
                     when Orange =>
                         return True;
                     when Dark_Red =>
@@ -273,7 +273,7 @@ package body Lego is
             when Plate_2X6 =>
                 case C is
                     when Brown =>
-                        return True;
+                        return False; -- Not ordered.
                     when Dark_Orange =>
                         return False;
                     when Orange =>
@@ -285,7 +285,7 @@ package body Lego is
                     when Reddish_Brown =>
                         return True;
                     when Medium_Orange =>
-                        return True;
+                        return False; -- Not ordered.
                     when others =>
                         return False;
                 end case;

@@ -9,6 +9,7 @@ procedure Generate_Wall is
 
     package Anfr renames Ada.Numerics.Float_Random;
 
+    use type Lego.Part;
     use type Options.Constraint;
     use type Options.Constraint_Array;
     use type Options.Parts_Option;
@@ -74,47 +75,47 @@ procedure Generate_Wall is
     Q_2Xn : constant array (Lego.Color range Lego.Brown .. Lego.Medium_Orange,
                             Lego.Plate_2Xn) of Long_Float :=
        (Lego.Brown => (
-                       Lego.Plate_1X2 => 0.132791,
-                       Lego.Plate_2X2 => 0.127535,
-                       Lego.Plate_2X3 => 0.119127,
-                       Lego.Plate_2X4 => 0.108398,
-                       Lego.Plate_2X6 => 0.160232),
+                       Lego.Plate_1X2 => 0.139812,
+                       Lego.Plate_2X2 => 0.143145,
+                       Lego.Plate_2X3 => 0.135680,
+                       Lego.Plate_2X4 => 0.231364,
+                       Lego.Plate_2X6 => 0.000000),
         Lego.Dark_Orange => (
-                             Lego.Plate_1X2 => 0.191019,
-                             Lego.Plate_2X2 => 0.271445,
-                             Lego.Plate_2X3 => 0.256391,
-                             Lego.Plate_2X4 => 0.307720,
+                             Lego.Plate_1X2 => 0.274529,
+                             Lego.Plate_2X2 => 0.476092,
+                             Lego.Plate_2X3 => 0.453249,
+                             Lego.Plate_2X4 => -0.000000,
                              Lego.Plate_2X6 => 0.000000),
         Lego.Orange => (
-                        Lego.Plate_1X2 => 0.115297,
-                        Lego.Plate_2X2 => 0.084300,
-                        Lego.Plate_2X3 => 0.077889,
-                        Lego.Plate_2X4 => 0.048516,
-                        Lego.Plate_2X6 => 0.105038),
+                        Lego.Plate_1X2 => 0.093722,
+                        Lego.Plate_2X2 => 0.029235,
+                        Lego.Plate_2X3 => 0.027030,
+                        Lego.Plate_2X4 => 0.073594,
+                        Lego.Plate_2X6 => 0.165801),
         Lego.Dark_Red => (
-                          Lego.Plate_1X2 => 0.150879,
-                          Lego.Plate_2X2 => 0.172240,
-                          Lego.Plate_2X3 => 0.161768,
-                          Lego.Plate_2X4 => 0.170318,
-                          Lego.Plate_2X6 => 0.217303),
+                          Lego.Plate_1X2 => 0.129305,
+                          Lego.Plate_2X2 => 0.117176,
+                          Lego.Plate_2X3 => 0.110909,
+                          Lego.Plate_2X4 => 0.195395,
+                          Lego.Plate_2X6 => 0.278066),
         Lego.Red => (
-                     Lego.Plate_1X2 => 0.150879,
-                     Lego.Plate_2X2 => 0.172240,
-                     Lego.Plate_2X3 => 0.161768,
-                     Lego.Plate_2X4 => 0.170318,
-                     Lego.Plate_2X6 => 0.217303),
+                     Lego.Plate_1X2 => 0.129305,
+                     Lego.Plate_2X2 => 0.117176,
+                     Lego.Plate_2X3 => 0.110909,
+                     Lego.Plate_2X4 => 0.195395,
+                     Lego.Plate_2X6 => 0.278066),
         Lego.Reddish_Brown => (
-                               Lego.Plate_1X2 => 0.150879,
-                               Lego.Plate_2X2 => 0.172240,
-                               Lego.Plate_2X3 => 0.161768,
-                               Lego.Plate_2X4 => 0.170318,
-                               Lego.Plate_2X6 => 0.217303),
+                               Lego.Plate_1X2 => 0.129305,
+                               Lego.Plate_2X2 => 0.117176,
+                               Lego.Plate_2X3 => 0.110909,
+                               Lego.Plate_2X4 => 0.195395,
+                               Lego.Plate_2X6 => 0.278066),
         Lego.Medium_Orange => (
-                               Lego.Plate_1X2 => 0.108255,
+                               Lego.Plate_1X2 => 0.104023,
                                Lego.Plate_2X2 => 0.000000,
-                               Lego.Plate_2X3 => 0.061289,
-                               Lego.Plate_2X4 => 0.024412,
-                               Lego.Plate_2X6 => 0.082821));
+                               Lego.Plate_2X3 => 0.051313,
+                               Lego.Plate_2X4 => 0.108856,
+                               Lego.Plate_2X6 => 0.000000));
 
     Q_Tile : constant array (Lego.Color range Lego.Brown .. Lego.Medium_Orange,
                              Lego.Tile) of Long_Float :=
@@ -153,20 +154,6 @@ procedure Generate_Wall is
                                Lego.Tile_1X2 => 0.000000,
                                Lego.Tile_1X4 => 0.148939,
                                Lego.Tile_1X6 => 0.000000));
-
-    -- Pleasantness : array (Lego.Color) of Float :=
-    --    (Lego.Bright_Pink | Lego.Clear | Lego.Light_Orange |
-    --     Lego.Light_Pink | Lego.Magenta | Lego.Pink |
-    --     Lego.Sand_Red | Lego.Tan | Lego.Very_Light_Orange => 0.0,
-    -- 
-    --     Lego.Brown => 0.13,
-    --     Lego.Dark_Orange => 0.18,
-    --     Lego.Dark_Red => 0.18,
-    --     Lego.Medium_Orange => 0.05,
-    --     Lego.Orange => 0.10,
-    --     Lego.Red => 0.18,
-    --     Lego.Reddish_Brown => 0.18
-    --     );
 
 
     Bottom      : constant Options.Constraint         := Options.Bottom;
@@ -275,21 +262,24 @@ procedure Generate_Wall is
         Tee_Cost        : constant := 0.1;
         Separation_Cost : constant := 1.0;
 
-        Anchors                 :
-           array (1 .. Options.Length (Tee)) of Natural :=
+        Anchors : array (1 .. Options.Length (Tee)) of Natural :=
            (others => 0);
+
+        After_Corner            : Boolean;
         At_Edge_Of_Aligned_Rows : Boolean;
-        Part_Width              : Natural;
         Column                  : Natural;
-        Result                  : Genetics.Fitness      := 0.0;
+        Part_Width              : Natural;
+        Result                  : Genetics.Fitness := 0.0;
         Row                     : Positive;
+        Spans_Corner            : Boolean          := False;
 
         use type Genetics.Fitness;
 
-        function Part_Cost (Width : Positive) return Genetics.Fitness is
+        function Part_Cost (Width : Positive; Spans_Corner : Boolean)
+                           return Genetics.Fitness is
         begin
             case Width is
-                when 1 | 2 | 4 | 6 =>
+                when 1 | 2 | 4 =>
                     return 0.0;
                 when 3 =>
                     case Parts is
@@ -304,6 +294,20 @@ procedure Generate_Wall is
                                 return Genetics.Fitness (Width);
                             end if;
                     end case;
+                when 5 | 7 =>
+                    if Options.Parts = Options.Plates_2Xn and then
+                       Spans_Corner then
+                        return 0.0;
+                    else
+                        return Genetics.Fitness (Width);
+                    end if;
+                when 6 =>
+                    if Options.Parts = Options.Plates_2Xn and then
+                       Spans_Corner then
+                        return Genetics.Fitness (Width);
+                    else
+                        return 0.0;
+                    end if;
                 when 8 =>
                     return 0.1;
                 when others =>
@@ -327,21 +331,39 @@ procedure Generate_Wall is
                     Column = Width - Right (Row) and then
                     Column = Width - Right (Row - 1)));
 
+            After_Corner := False;
+            if Corner /= null then
+                for J in Corner'Range loop
+                    if Column = Corner (J) then
+
+                        -- We are at the separation immediately after the stud for a corner.
+                        After_Corner := True;
+                        Spans_Corner := True;
+                    end if;
+                end loop;
+            end if;
+
             -- Here Part_Width is the width of the part being constructed.
             if Column = Positive (Width_Minus_One) then
 
                 -- End of a row.
                 if Genome (I) then
-                    Result := Result + Part_Cost (Part_Width) +
-                                 Part_Cost (1);
+                    Result       := Result + Part_Cost
+                                                (Part_Width, Spans_Corner) +
+                                       Part_Cost (1, Spans_Corner => False);
+                    Spans_Corner := False;
                     if Row > 1 and then
                        not At_Edge_Of_Aligned_Rows and then
                        Genome (I - Width_Minus_One) then
                         Result := Result + Separation_Cost;
                     end if;
                 else
-                    if Right = null or else Column < Width - Right (Row) then
-                        Result := Result + Part_Cost (Part_Width + 1);
+                    if Right = null or else Column <
+                                               Width - Right (Row) then
+                        Result       :=
+                           Result + Part_Cost
+                                       (Part_Width + 1, Spans_Corner);
+                        Spans_Corner := False;
                     end if;
                 end if;
                 Part_Width := 0;
@@ -349,7 +371,9 @@ procedure Generate_Wall is
             else
                 if Genome (I) then
                     if Left = null or else Column > Left (Row) then
-                        Result := Result + Part_Cost (Part_Width);
+                        Result       := Result + Part_Cost
+                                                    (Part_Width, Spans_Corner);
+                        Spans_Corner := False;
                     end if;
                     Part_Width := 0;
                     if Row > 1 and then
@@ -363,52 +387,53 @@ procedure Generate_Wall is
             if (Bottom = null or else Row > 1) and then
                (Top = null or else Row < Height) then
 
-                if Corner /= null then
-                    for J in Corner'Range loop
-                        if Column = Corner (J) then
+                if After_Corner then
 
-                            -- We are at the separation immediately after the stud for a corner.
-                            if Parts = Options.Plates_2Xn then
-                                if Column = 2 or else
-                                   Genome (I - 2) or else
-                                   Column = Positive
-                                               (Width_Minus_One) or else
-                                   Genome (I + 1) then
+                    if Parts = Options.Plates_2Xn then
+                        if Genome (I) or else Genome (I - 1) then
 
-                                    -- This is a 2xN or Nx2 corner.  Fine.
-                                    null;
-                                else
-                                    -- This is not a corner that we like.
-                                    Result := Result + Corner_Cost;
-                                end if;
-                            else
-                                if Genome (I) or else Genome (I - 1) then
+                            -- This is an 1xN or Nx1 corner.  Hard to do with 2xn parts.
+                            Result := Result + Corner_Cost;
+                        elsif Column = 2 or else
+                              Genome (I - 2) or else
+                              Column = Positive
+                                          (Width_Minus_One) or else
+                              Genome (I + 1) then
 
-                                    -- This is an 1xN or Nx1 corner.  Fine.
-                                    null;
-                                elsif (Column = 2 or else
-                                       Genome (I - 2)) and then
-                                      (Column = Positive
-                                                   (Width_Minus_One) or else
-                                       Genome (I + 1)) then
-
-                                    -- This case can be covered by a 2x2 corner, but only for plates.
-                                    case Parts is
-                                        when Options.Plates_1Xn =>
-                                            null;
-                                        when Options.Tiles =>
-                                            Result := Result + Corner_Cost;
-                                        when Options.Plates_2Xn =>
-                                            pragma Assert (False);
-                                            null;
-                                    end case;
-                                else
-                                    -- This is not a corner that we like.
-                                    Result := Result + Corner_Cost;
-                                end if;
-                            end if;
+                            -- This is a 2xN or Nx2 corner.  Fine.
+                            null;
+                        else
+                            -- This is not a corner that we like.
+                            Result := Result + Corner_Cost;
                         end if;
-                    end loop;
+                    else
+                        if Genome (I) or else Genome (I - 1) then
+
+                            -- This is an 1xN or Nx1 corner.  Fine.
+                            null;
+                        elsif (Column = 2 or else
+                               Genome (I - 2)) and then
+                              (Column = Positive
+                                           (Width_Minus_One) or else
+                               Genome (I + 1)) then
+
+                            -- This case can be covered by a 2x2 corner, but only for plates.
+                            -- This could possibly be handled by the cost function, but I don't
+                            -- want to change the optimization landscape.
+                            case Parts is
+                                when Options.Plates_1Xn =>
+                                    null;
+                                when Options.Tiles =>
+                                    Result := Result + Corner_Cost;
+                                when Options.Plates_2Xn =>
+                                    pragma Assert (False);
+                                    null;
+                            end case;
+                        else
+                            -- This is not a corner that we like.
+                            Result := Result + Corner_Cost;
+                        end if;
+                    end if;
                 end if;
 
                 if Tee /= null then
@@ -428,8 +453,10 @@ procedure Generate_Wall is
 
                                 -- This is a corner before the stud of the tee.
                                 Anchors (J) := Anchors (J) + 1;
-                            elsif (Column = 1 or else Genome (I - 1)) and then
-                                  (Column = Positive (Width_Minus_One) or else
+                            elsif (Column = 1 or else
+                                   Genome (I - 1)) and then
+                                  (Column = Positive
+                                               (Width_Minus_One) or else
                                    Genome (I + 1)) then
 
                                 -- This is a corner after the stud of the tee.
@@ -796,6 +823,9 @@ begin
             end case;
         end Q;
 
+        -- X, Y, Z is a corner, not the center of the part.  In the horizontal plane,
+        -- it is the corner with lowest X and Z.  It must be adjusted when turning a
+        -- corner.  Warning!  X and Y are measured in half-studs.
         type Output_State is
             record
                 X, Y, Z      : Integer;
@@ -817,18 +847,23 @@ begin
             Is_Top_Bottom : constant Boolean  :=
                (Bottom /= null and then S.Y = 0) or else
                   (Top /= null and then S.Y = 1 - Height);
-            Part_Width    : constant Positive :=
+            Stud_Count    : constant Positive :=
                Last_Stud - First_Stud + 1;
             Use_Tiles     : constant Boolean  :=
                Parts = Options.Tiles and then S.Y = 1 - Height;
 
-            C           : Lego.Color;
-            Corner_Stud : Natural := 0;
-            Is_2X2      : Boolean;
-            Is_Tee      : Boolean := False;
-            P           : Lego.Part;
-            Hide        : Boolean;
-            Skip        : Boolean;
+            C                          : Lego.Color;
+            Corner_Stud1, Corner_Stud2 : Natural := 0;
+            Has_Turned                 : Boolean := False;
+            Is_Narrow                  : Boolean := False;
+            Is_Tee                     : Boolean := False;
+            P                          : Lego.Part;
+            Part_Depth                 : Positive;
+            Part_Width                 : Positive;
+            Hide                       : Boolean;
+            Skip                       : Boolean;
+            Spans_Corner               : Boolean := False;
+            Spans_Corner_Strictly      : Boolean := False;
 
             function Random (P : Lego.Part) return Lego.Color is
                 R : Long_Float range 0.0 .. 1.0;
@@ -865,10 +900,40 @@ begin
 
         begin
 
+            -- See if there is a corner spanning the part.  Actually, there can be two corners.
+            case Parts is
+                when Options.Plates_1Xn | Options.Tiles =>
+                    Part_Depth := 1;
+                when Options.Plates_2Xn =>
+                    Part_Depth := 2;
+            end case;
+            Part_Width := Stud_Count;
+            if Corner /= null then
+                for I in Corner'Range loop
+                    if Corner (I) in First_Stud .. Last_Stud then
+                        if Corner_Stud1 = 0 then
+                            Corner_Stud1          := Corner (I);
+                            Corner_Stud2          := Corner (I);
+                            Spans_Corner          := True;
+                            Spans_Corner_Strictly :=
+                               Corner_Stud1 in First_Stud + 1 .. Last_Stud - 1;
+                            Part_Depth            :=
+                               Integer'Min
+                                  (Last_Stud - Corner_Stud1 + 1,
+                                   Corner_Stud1 - First_Stud + 1);
+                            Part_Width            :=
+                               Integer'Max
+                                  (Last_Stud - Corner_Stud1 + 1,
+                                   Corner_Stud1 - First_Stud + 1);
+                        else
+                            Corner_Stud2 := Corner (I);
+                        end if;
+                    end if;
+                end loop;
+            end if;
+
             -- Determine the part to generate.
-            Is_2X2 := Part_Width = 3 and then
-                         Options.Is_In ((First_Stud + Last_Stud) / 2, Corner);
-            case Part_Width is
+            case Stud_Count is
                 when 1 =>
                     if Use_Tiles then
                         P := Lego.Tile_1X1;
@@ -877,7 +942,8 @@ begin
                             when Options.Plates_1Xn | Options.Tiles =>
                                 P := Lego.Plate_1X1;
                             when Options.Plates_2Xn =>
-                                P := Lego.Plate_1X2; -- Orientation!!!
+                                Is_Narrow := True;
+                                P         := Lego.Plate_1X2;
                         end case;
                     end if;
                     Is_Tee := Options.Is_In (First_Stud, Tee);
@@ -895,16 +961,20 @@ begin
                     Is_Tee := Options.Is_In (First_Stud, Tee) or else
                                  Options.Is_In (Last_Stud, Tee);
                 when 3 =>
-                    if Is_2X2 then
-                        P := Lego.Plate_2X2_Corner;
-                    else
-                        case Parts is
-                            when Options.Plates_1Xn | Options.Tiles =>
+                    case Parts is
+                        when Options.Plates_1Xn | Options.Tiles =>
+                            if Spans_Corner_Strictly then
+                                P := Lego.Plate_2X2_Corner;
+                            else
                                 P := Lego.Plate_1X3;
-                            when Options.Plates_2Xn =>
+                            end if;
+                        when Options.Plates_2Xn =>
+                            if Spans_Corner_Strictly then
+                                P := Lego.Plate_2X2;
+                            else
                                 P := Lego.Plate_2X3;
-                        end case;
-                    end if;
+                            end if;
+                    end case;
                 when 4 =>
                     if Use_Tiles then
                         P := Lego.Tile_1X4;
@@ -913,8 +983,21 @@ begin
                             when Options.Plates_1Xn | Options.Tiles =>
                                 P := Lego.Plate_1X4;
                             when Options.Plates_2Xn =>
-                                P := Lego.Plate_2X4;
+                                if Spans_Corner_Strictly then
+                                    P := Lego.Plate_2X3;
+                                else
+                                    P := Lego.Plate_2X4;
+                                end if;
                         end case;
+                    end if;
+                when 5 =>
+                    if Parts = Options.Plates_2Xn and then Spans_Corner then
+                        P := Lego.Plate_2X4;
+                    else
+                        for I in First_Stud .. Last_Stud loop
+                            Output_Part (I, I, S);
+                        end loop;
+                        return;
                     end if;
                 when 6 =>
                     if Use_Tiles then
@@ -926,6 +1009,15 @@ begin
                             when Options.Plates_2Xn =>
                                 P := Lego.Plate_2X6;
                         end case;
+                    end if;
+                when 7 =>
+                    if Parts = Options.Plates_2Xn and then Spans_Corner then
+                        P := Lego.Plate_2X6;
+                    else
+                        for I in First_Stud .. Last_Stud loop
+                            Output_Part (I, I, S);
+                        end loop;
+                        return;
                     end if;
                 when others =>
                     for I in First_Stud .. Last_Stud loop
@@ -983,7 +1075,9 @@ begin
                     Put (" " & Lego.Ldraw_Image (C));
             end case;
 
-            if Is_2X2 then
+            if P = Lego.Plate_2X2_Corner then
+
+                -- Weird.  The center of this part is on the corner stud.
                 case S.Direction is
                     when X_Axis =>
                         S.X := S.X + 1;
@@ -993,49 +1087,59 @@ begin
                         S.Z := S.Z + 1;
                 end case;
                 S.Direction := Other (S.Direction);
-            elsif Corner /= null and then First_Stud /= Last_Stud then
-                for I in Corner'Range loop
-                    if Corner (I) = First_Stud then
-                        Corner_Stud := Corner (I);
-                        S.Direction := Other (S.Direction);
-                        exit;
-                    end if;
-                end loop;
+                Has_Turned  := True;
+            elsif Spans_Corner and then
+                  Corner_Stud1 = First_Stud + Part_Depth - 1 and then
+                  Corner_Stud1 /= Last_Stud - Part_Depth + 1 then
+                S.Direction := Other (S.Direction);
+                Has_Turned  := True;
             end if;
 
             case S.Direction is
                 when X_Axis =>
-                    Put (" " & Integer'Image (20 * S.X + 10 * Part_Width) &
+                    Put (" " & Integer'Image (10 * S.X + 10 * Part_Width) &
                          " " & Integer'Image (8 * S.Y) &
-                         " " & Integer'Image (20 * S.Z + 10 * 1));
-                    if Is_2X2 then
+                         " " & Integer'Image (10 * S.Z + 10 * Part_Depth));
+                    if P = Lego.Plate_2X2_Corner or else --?? Has_Turned or else
+                       Is_Narrow then
                         Put (" 0 0 1 0 1 0 -1 0 0");
                     else
                         Put (" 1 0 0 0 1 0 0 0 1");
                     end if;
                 when Z_Axis =>
-                    Put (" " & Integer'Image (20 * S.X + 10 * 1) &
+                    Put (" " & Integer'Image (10 * S.X + 10 * Part_Depth) &
                          " " & Integer'Image (8 * S.Y) &
-                         " " & Integer'Image (20 * S.Z + 10 * Part_Width));
-                    Put (" 0 0 -1 0 1 0 1 0 0");
+                         " " & Integer'Image (10 * S.Z + 10 * Part_Width));
+                    if --?? Has_Turned or else
+                      Is_Narrow then
+                        Put (" -1 0 0 0 1 0 0 0 -1");
+                    else
+                        Put (" 0 0 -1 0 1 0 1 0 0");
+                    end if;
             end case;
 
-            if Corner /= null then
-                for I in Corner'Range loop
-                    if Corner (I) = Last_Stud then
-                        Corner_Stud := Corner (I);
-                        case S.Direction is
-                            when X_Axis =>
-                                S.X := S.X + Part_Width - 1;
-                                S.Z := S.Z + 1;
-                            when Z_Axis =>
-                                S.Z := S.Z + Part_Width - 1;
-                                S.X := S.X + 1;
-                        end case;
-                        S.Direction := Other (S.Direction);
-                        exit;
-                    end if;
-                end loop;
+            if P = Lego.Plate_2X2_Corner then
+
+                -- Same oddity as above.
+                case S.Direction is
+                    when X_Axis =>
+                        S.X := S.X + 5;
+                        S.Z := S.Z + 1;
+                    when Z_Axis =>
+                        S.X := S.X + 1;
+                        S.Z := S.Z + 5;
+                end case;
+            elsif Spans_Corner and then Corner_Stud2 =
+                                           Last_Stud - Part_Depth + 1 then
+                case S.Direction is
+                    when X_Axis =>
+                        S.X := S.X + 2 * (Part_Width - Part_Depth);
+                        S.Z := S.Z + 2 * Part_Depth;
+                    when Z_Axis =>
+                        S.X := S.X + 2 * Part_Depth;
+                        S.Z := S.Z + 2 * (Part_Width - Part_Depth);
+                end case;
+                S.Direction := Other (S.Direction);
             end if;
 
             Put_Line (" " & Lego.Part_Id_Image (P) & ".DAT");
@@ -1058,12 +1162,13 @@ begin
                                                  Integer'Image (-S.Y - 1));
                     end if;
                 end if;
-            elsif Corner_Stud /= Last_Stud then
+            elsif not Spans_Corner or else
+                  Corner_Stud2 /= Last_Stud - Part_Depth + 1 then
                 case S.Direction is
                     when X_Axis =>
-                        S.X := S.X + Part_Width;
+                        S.X := S.X + 2 * Part_Width;
                     when Z_Axis =>
-                        S.Z := S.Z + Part_Width;
+                        S.Z := S.Z + 2 * Part_Width;
                 end case;
             end if;
         end Output_Part;
