@@ -34,9 +34,18 @@ rem generate_wall %COLOR% %SHOW% %TRACE% /w 1 /h 2  /colorseed 39               
 rem generate_wall %COLOR% %SHOW% %TRACE% /w 1 /h 9  /colorseed 41                                                           /out %NAME%40.ldr
 rem generate_wall %COLOR% %SHOW% %TRACE% /w 26 /h 5 /seed 41 /bottom 14166431 /corner 12 /tee 1 /tee 11 /tee 13 /left 11000 /out %NAME%41.ldr
 rem generate_wall %COLOR% %SHOW% %TRACE% /w 30 /h 1 /bottom 126224161122 /corner 24 /parts tiles                            /out %NAME%42.ldr
-rem generate_wall %COLOR% %SHOW% %TRACE% /w 78 /h 1 /seed 43000 /bottom 12234241141141116216661431621 /corner 13 /corner 24 /corner 49 /parts tiles /out %NAME%43.ldr
-rem generate_wall %COLOR% %SHOW% %TRACE% /w 26 /h 1 /bottom 1131132132422 /corner 12 /parts tiles                           /out %NAME%44.ldr
+rem generate_wall %COLOR% %SHOW% %TRACE% /w 74 /h 1 /seed 43000 /bottom 134241141141116216661431621 /corner 9 /corner 20 /corner 45 /parts tiles /out %NAME%43.ldr
+rem generate_wall %COLOR% %SHOW% %TRACE% /w 27 /h 1 /bottom 11131132132422 /corner 13 /parts tiles                          /out %NAME%44.ldr
 rem generate_wall %COLOR% %SHOW% %TRACE% /w 1 /h 25 /colorseed 45                                                           /out %NAME%45.ldr
 
-rem generate_wall %COLOR% %SHOW% %TRACE% /w 26 /h 1 /bottom 122112242144 /corner 15 /colorseed 201 /parts plates_2xn        /out %NAME%201.ldr
-generate_wall %COLOR% %SHOW% %TRACE% /w 66 /h 1 /seed 202 /bottom 22214122421211114261261461121 /corner 30 /corner 55 /colorseed 202 /parts plates_2xn        /out %NAME%202.ldr
+rem generate_wall %COLOR% %SHOW% %TRACE% /w 27 /h 1 /bottom 1221144264 /corner 15 /colorseed 201 /parts plates_2xn          /out %NAME%201.ldr
+rem generate_wall %COLOR% %SHOW% %TRACE% /w 66 /h 1 /seed 202 /bottom 22211444212121426126141141121 /corner 30 /corner 55 /colorseed 202 /parts plates_2xn /out %NAME%202.ldr
+rem generate_wall %COLOR% %SHOW% %TRACE% /w 27 /h 6 /bottom 44443111221 /top 341316423 /corner 15 /tee 14 /tee 16           /out %NAME%203.ldr
+rem generate_wall %COLOR% %SHOW% %TRACE% /w 3 /h 17 /bottom 21                                                              /out %NAME%204.ldr
+rem generate_wall %COLOR% %SHOW% %TRACE% /w 6 /h 14 /bottom 1212 /corner 3 /tee 2 /tee 4                                    /out %NAME%205.ldr
+rem generate_wall %COLOR% %SHOW% %TRACE% /w 5 /h 13 /bottom 32                                                              /out %NAME%206.ldr
+rem generate_wall %COLOR% %SHOW% %TRACE% /w 6 /h 18 /tee 4 /right 555444333222111000                                        /out %NAME%207.ldr
+rem generate_wall %COLOR% %SHOW% %TRACE% /w 8 /h 1 /bottom 2411 /colorseed 892                                              /out %NAME%208.ldr
+rem generate_wall %COLOR% %SHOW% %TRACE% /w 74 /h 6 /gen 1000 /seed 2090 /left 011122 /bottom 12232422313361212214332222211441 /top 666666631443623411 /corner 9 /corner 20 /corner 45 /tee 19 /tee 21 /tee 44 /tee 46 /tee 59 /out %NAME%209.ldr
+rem generate_wall %COLOR% %SHOW% %TRACE% /w 43 /h 2 /left 01 /bottom 62411321642133211 /top 34434663226 /corner 7 /corner 18 /tee 17 /tee 19 /tee 42 /out %NAME%210.ldr
+generate_wall %COLOR% %SHOW% %TRACE% /w 6 /h 11 /left 00111222333 /bottom 411 /out %NAME%211.ldr
