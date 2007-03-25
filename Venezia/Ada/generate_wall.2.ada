@@ -864,6 +864,8 @@ begin
             Skip                       : Boolean;
             Spans_Corner               : Boolean := False;
             Spans_Corner_Strictly      : Boolean := False;
+            Spans_Three_Corners        : Boolean := False;
+            Spans_Two_Corners          : Boolean := False;
 
             function Random (P : Lego.Part) return Lego.Color is
                 R : Long_Float range 0.0 .. 1.0;
@@ -900,7 +902,8 @@ begin
 
         begin
 
-            -- See if there is a corner spanning the part.  Actually, there can be two corners.
+            -- See if there is a corner spanning the part.  Actually, there can be three corners, but we only
+            -- record the first one and the last one.
             case Parts is
                 when Options.Plates_1Xn | Options.Tiles =>
                     Part_Depth := 1;
@@ -926,7 +929,11 @@ begin
                                   (Last_Stud - Corner_Stud1 + 1,
                                    Corner_Stud1 - First_Stud + 1);
                         else
-                            Corner_Stud2 := Corner (I);
+                            Corner_Stud2          := Corner (I);
+                            Spans_Corner_Strictly :=
+                               Spans_Corner_Strictly or else
+                                  (Corner_Stud2 in
+                                   First_Stud + 1 .. Last_Stud - 1);
                         end if;
                     end if;
                 end loop;
@@ -965,6 +972,12 @@ begin
                         when Options.Plates_1Xn | Options.Tiles =>
                             if Spans_Corner_Strictly then
                                 P := Lego.Plate_2X2_Corner;
+
+                                -- Two means two and not three.
+                                Spans_Two_Corners   :=
+                                   Corner_Stud2 = Corner_Stud1 + 1;
+                                Spans_Three_Corners :=
+                                   Corner_Stud2 = Corner_Stud1 + 2;
                             else
                                 P := Lego.Plate_1X3;
                             end if;
@@ -1078,16 +1091,52 @@ begin
             if P = Lego.Plate_2X2_Corner then
 
                 -- Weird.  The center of this part is on the corner stud.
-                case S.Direction is
-                    when X_Axis =>
-                        S.X := S.X + 1;
-                        S.Z := S.Z - 1;
-                    when Z_Axis =>
-                        S.X := S.X - 1;
-                        S.Z := S.Z + 1;
-                end case;
-                S.Direction := Other (S.Direction);
-                Has_Turned  := True;
+                if Spans_Three_Corners then
+                    case S.Direction is
+                        when X_Axis =>
+                            S.X := S.X - 2;
+                            S.Z := S.Z + 2;
+                        when Z_Axis =>
+                            S.X := S.X + 2;
+                            S.Z := S.Z - 2;
+                    end case;
+                elsif Spans_Two_Corners then
+                    if Corner_Stud1 = First_Stud then
+                        case S.Direction is
+                            when X_Axis =>
+                                S.X := S.X - 2;
+                                S.Z := S.Z + 2;
+                            when Z_Axis =>
+                                S.X := S.X + 2;
+                                S.Z := S.Z - 2;
+                        end case;
+                    elsif Corner_Stud2 = Last_Stud then
+                        case S.Direction is
+                            when X_Axis =>
+                                S.X := S.X + 1;
+                                S.Z := S.Z - 1;
+                            when Z_Axis =>
+                                S.X := S.X - 1;
+                                S.Z := S.Z + 1;
+                        end case;
+                        S.Direction := Other (S.Direction);
+                        Has_Turned  := True;
+                    else
+                        pragma Assert (False);
+                        null;
+                    end if;
+                else
+                    case S.Direction is
+                        when X_Axis =>
+                            S.X := S.X + 1;
+                            S.Z := S.Z - 1;
+                        when Z_Axis =>
+                            S.X := S.X - 1;
+                            S.Z := S.Z + 1;
+                    end case;
+                    S.Direction := Other (S.Direction);
+                    Has_Turned  := True;
+                end if;
             elsif Spans_Corner and then
                   Corner_Stud1 = First_Stud + Part_Depth - 1 and then
                   Corner_Stud1 /= Last_Stud - Part_Depth + 1 then
@@ -1100,8 +1149,9 @@ begin
                     Put (" " & Integer'Image (10 * S.X + 10 * Part_Width) &
                          " " & Integer'Image (8 * S.Y) &
                          " " & Integer'Image (10 * S.Z + 10 * Part_Depth));
-                    if P = Lego.Plate_2X2_Corner or else --?? Has_Turned or else
-                       Is_Narrow then
+                    if (P = Lego.Plate_2X2_Corner and then
+                        (Spans_Three_Corners or else
+                         Corner_Stud1 /= First_Stud)) or else Is_Narrow then
                         Put (" 0 0 1 0 1 0 -1 0 0");
                     else
                         Put (" 1 0 0 0 1 0 0 0 1");
@@ -1121,14 +1171,43 @@ begin
             if P = Lego.Plate_2X2_Corner then
 
                 -- Same oddity as above.
-                case S.Direction is
-                    when X_Axis =>
-                        S.X := S.X + 5;
-                        S.Z := S.Z + 1;
-                    when Z_Axis =>
-                        S.X := S.X + 1;
-                        S.Z := S.Z + 5;
-                end case;
+                if Spans_Three_Corners then
+                    case S.Direction is
+                        when X_Axis =>
+                            S.X := S.X + 4;
+                            S.Z := S.Z + 2;
+                        when Z_Axis =>
+                            S.X := S.X + 2;
+                            S.Z := S.Z + 4;
+                    end case;
+                    S.Direction := Other (S.Direction);
+                elsif Spans_Two_Corners then
+                    if Corner_Stud1 = First_Stud then
+                        null;
+                    elsif Corner_Stud2 = Last_Stud then
+                        case S.Direction is
+                            when X_Axis =>
+                                S.X := S.X + 3;
+                                S.Z := S.Z - 1;
+                            when Z_Axis =>
+                                S.X := S.X - 1;
+                                S.Z := S.Z + 3;
+                        end case;
+                        S.Direction := Other (S.Direction);
+                    else
+                        pragma Assert (False);
+                        null;
+                    end if;
+                else
+                    case S.Direction is
+                        when X_Axis =>
+                            S.X := S.X + 5;
+                            S.Z := S.Z + 1;
+                        when Z_Axis =>
+                            S.X := S.X + 1;
+                            S.Z := S.Z + 5;
+                    end case;
+                end if;
             elsif Spans_Corner and then Corner_Stud2 =
                                            Last_Stud - Part_Depth + 1 then
                 case S.Direction is
