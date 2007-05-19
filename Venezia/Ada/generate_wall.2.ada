@@ -2,6 +2,7 @@ with Ada.Numerics.Float_Random;
 with Ada.Numerics.Generic_Elementary_Functions;
 with Ada.Text_Io;
 with Genetics;
+with Layout;
 with Lego;
 with Options;
 
@@ -806,9 +807,6 @@ begin
 
 
     declare
-        type Horizontal is (X_Axis, Z_Axis);
-        Other        : constant array (Horizontal) of Horizontal :=
-           (X_Axis => Z_Axis, Z_Axis => X_Axis);
         Cumulative_Q : array (Q_1Xn'Range (1), Lego.Part) of Long_Float;
 
         function Q (C : Lego.Color; P : Lego.Part) return Long_Float is
@@ -823,13 +821,10 @@ begin
             end case;
         end Q;
 
-        -- X, Y, Z is a corner, not the center of the part.  In the horizontal plane,
-        -- it is the corner with lowest X and Z.  It must be adjusted when turning a
-        -- corner.  Warning!  X and Y are measured in half-studs.
         type Output_State is
             record
-                X, Y, Z      : Integer;
-                Direction    : Horizontal;
+                Y            : Integer;
+                Layout_State : Layout.State;
                 Last_Color   : Lego.Color;
                 Start_Of_Row : Boolean;
             end record;
@@ -847,25 +842,17 @@ begin
             Is_Top_Bottom : constant Boolean  :=
                (Bottom /= null and then S.Y = 0) or else
                   (Top /= null and then S.Y = 1 - Height);
-            Stud_Count    : constant Positive :=
-               Last_Stud - First_Stud + 1;
+            Stud_Count    : constant Positive := Last_Stud - First_Stud + 1;
             Use_Tiles     : constant Boolean  :=
                Parts = Options.Tiles and then S.Y = 1 - Height;
 
-            C                          : Lego.Color;
-            Corner_Stud1, Corner_Stud2 : Natural := 0;
-            Has_Turned                 : Boolean := False;
-            Is_Narrow                  : Boolean := False;
-            Is_Tee                     : Boolean := False;
-            P                          : Lego.Part;
-            Part_Depth                 : Positive;
-            Part_Width                 : Positive;
-            Hide                       : Boolean;
-            Skip                       : Boolean;
-            Spans_Corner               : Boolean := False;
-            Spans_Corner_Strictly      : Boolean := False;
-            Spans_Three_Corners        : Boolean := False;
-            Spans_Two_Corners          : Boolean := False;
+            C      : Lego.Color;
+            Is_Tee : Boolean := False;
+            P      : Lego.Part;
+            Hide   : Boolean;
+            Skip   : Boolean;
+            X, Z   : Integer;
+            M      : Layout.Matrix;
 
             function Random (P : Lego.Part) return Lego.Color is
                 R : Long_Float range 0.0 .. 1.0;
@@ -900,143 +887,36 @@ begin
                 end if;
             end Put_Line;
 
-        begin
+            procedure Put (M : Layout.Matrix) is
+            begin
+                -- By column...
+                for I in M'Range (2) loop
+                    for J in M'Range (1) loop
 
-            -- See if there is a corner spanning the part.  Actually, there can be three corners, but we only
-            -- record the first one and the last one.
-            case Parts is
-                when Options.Plates_1Xn | Options.Tiles =>
-                    Part_Depth := 1;
-                when Options.Plates_2Xn =>
-                    Part_Depth := 2;
-            end case;
-            Part_Width := Stud_Count;
-            if Corner /= null then
-                for I in Corner'Range loop
-                    if Corner (I) in First_Stud .. Last_Stud then
-                        if Corner_Stud1 = 0 then
-                            Corner_Stud1          := Corner (I);
-                            Corner_Stud2          := Corner (I);
-                            Spans_Corner          := True;
-                            Spans_Corner_Strictly :=
-                               Corner_Stud1 in First_Stud + 1 .. Last_Stud - 1;
-                            Part_Depth            :=
-                               Integer'Min
-                                  (Last_Stud - Corner_Stud1 + 1,
-                                   Corner_Stud1 - First_Stud + 1);
-                            Part_Width            :=
-                               Integer'Max
-                                  (Last_Stud - Corner_Stud1 + 1,
-                                   Corner_Stud1 - First_Stud + 1);
-                        else
-                            Corner_Stud2          := Corner (I);
-                            Spans_Corner_Strictly :=
-                               Spans_Corner_Strictly or else
-                                  (Corner_Stud2 in
-                                   First_Stud + 1 .. Last_Stud - 1);
-                        end if;
-                    end if;
+                        declare
+                            S : constant String :=
+                               Integer'Image (Integer (M (J, I)));
+                        begin
+                            if S (S'First) = ' ' then
+                                Put (S);
+                            else
+                                Put (" " & S);
+                            end if;
+                        end;
+
+                    end loop;
                 end loop;
-            end if;
+            end Put;
 
-            -- Determine the part to generate.
+        begin
             case Stud_Count is
                 when 1 =>
-                    if Use_Tiles then
-                        P := Lego.Tile_1X1;
-                    else
-                        case Parts is
-                            when Options.Plates_1Xn | Options.Tiles =>
-                                P := Lego.Plate_1X1;
-                            when Options.Plates_2Xn =>
-                                Is_Narrow := True;
-                                P         := Lego.Plate_1X2;
-                        end case;
-                    end if;
                     Is_Tee := Options.Is_In (First_Stud, Tee);
                 when 2 =>
-                    if Use_Tiles then
-                        P := Lego.Tile_1X2;
-                    else
-                        case Parts is
-                            when Options.Plates_1Xn | Options.Tiles =>
-                                P := Lego.Plate_1X2;
-                            when Options.Plates_2Xn =>
-                                P := Lego.Plate_2X2;
-                        end case;
-                    end if;
                     Is_Tee := Options.Is_In (First_Stud, Tee) or else
                                  Options.Is_In (Last_Stud, Tee);
-                when 3 =>
-                    case Parts is
-                        when Options.Plates_1Xn | Options.Tiles =>
-                            if Spans_Corner_Strictly then
-                                P := Lego.Plate_2X2_Corner;
-
-                                -- Two means two and not three.
-                                Spans_Two_Corners   :=
-                                   Corner_Stud2 = Corner_Stud1 + 1;
-                                Spans_Three_Corners :=
-                                   Corner_Stud2 = Corner_Stud1 + 2;
-                            else
-                                P := Lego.Plate_1X3;
-                            end if;
-                        when Options.Plates_2Xn =>
-                            if Spans_Corner_Strictly then
-                                P := Lego.Plate_2X2;
-                            else
-                                P := Lego.Plate_2X3;
-                            end if;
-                    end case;
-                when 4 =>
-                    if Use_Tiles then
-                        P := Lego.Tile_1X4;
-                    else
-                        case Parts is
-                            when Options.Plates_1Xn | Options.Tiles =>
-                                P := Lego.Plate_1X4;
-                            when Options.Plates_2Xn =>
-                                if Spans_Corner_Strictly then
-                                    P := Lego.Plate_2X3;
-                                else
-                                    P := Lego.Plate_2X4;
-                                end if;
-                        end case;
-                    end if;
-                when 5 =>
-                    if Parts = Options.Plates_2Xn and then Spans_Corner then
-                        P := Lego.Plate_2X4;
-                    else
-                        for I in First_Stud .. Last_Stud loop
-                            Output_Part (I, I, S);
-                        end loop;
-                        return;
-                    end if;
-                when 6 =>
-                    if Use_Tiles then
-                        P := Lego.Tile_1X6;
-                    else
-                        case Parts is
-                            when Options.Plates_1Xn | Options.Tiles =>
-                                P := Lego.Plate_1X6;
-                            when Options.Plates_2Xn =>
-                                P := Lego.Plate_2X6;
-                        end case;
-                    end if;
-                when 7 =>
-                    if Parts = Options.Plates_2Xn and then Spans_Corner then
-                        P := Lego.Plate_2X6;
-                    else
-                        for I in First_Stud .. Last_Stud loop
-                            Output_Part (I, I, S);
-                        end loop;
-                        return;
-                    end if;
                 when others =>
-                    for I in First_Stud .. Last_Stud loop
-                        Output_Part (I, I, S);
-                    end loop;
-                    return;
+                    null;
             end case;
 
             if Is_Top_Bottom then
@@ -1088,148 +968,26 @@ begin
                     Put (" " & Lego.Ldraw_Image (C));
             end case;
 
-            if P = Lego.Plate_2X2_Corner then
+            Layout.Append (First_Stud => First_Stud,
+                           Last_Stud => Last_Stud,
+                           S => S.Layout_State,
+                           X => X,
+                           Z => Z,
+                           M => M,
+                           Part => P);
 
-                -- Weird.  The center of this part is on the corner stud.
-                if Spans_Three_Corners then
-                    case S.Direction is
-                        when X_Axis =>
-                            S.X := S.X - 2;
-                            S.Z := S.Z + 2;
-                        when Z_Axis =>
-                            S.X := S.X + 2;
-                            S.Z := S.Z - 2;
-                    end case;
-                elsif Spans_Two_Corners then
-                    if Corner_Stud1 = First_Stud then
-                        case S.Direction is
-                            when X_Axis =>
-                                S.X := S.X - 2;
-                                S.Z := S.Z + 2;
-                            when Z_Axis =>
-                                S.X := S.X + 2;
-                                S.Z := S.Z - 2;
-                        end case;
-                    elsif Corner_Stud2 = Last_Stud then
-                        case S.Direction is
-                            when X_Axis =>
-                                S.X := S.X + 1;
-                                S.Z := S.Z - 1;
-                            when Z_Axis =>
-                                S.X := S.X - 1;
-                                S.Z := S.Z + 1;
-                        end case;
-                        S.Direction := Other (S.Direction);
-                        Has_Turned  := True;
-                    else
-                        pragma Assert (False);
-                        null;
-                    end if;
-                else
-                    case S.Direction is
-                        when X_Axis =>
-                            S.X := S.X + 1;
-                            S.Z := S.Z - 1;
-                        when Z_Axis =>
-                            S.X := S.X - 1;
-                            S.Z := S.Z + 1;
-                    end case;
-                    S.Direction := Other (S.Direction);
-                    Has_Turned  := True;
-                end if;
-            elsif Spans_Corner and then
-                  Corner_Stud1 = First_Stud + Part_Depth - 1 and then
-                  Corner_Stud1 /= Last_Stud - Part_Depth + 1 then
-                S.Direction := Other (S.Direction);
-                Has_Turned  := True;
-            end if;
+            Put (Integer'Image (X) & " " & Integer'Image (8 * S.Y) &
+                 " " & Integer'Image (Z));
 
-            case S.Direction is
-                when X_Axis =>
-                    Put (" " & Integer'Image (10 * S.X + 10 * Part_Width) &
-                         " " & Integer'Image (8 * S.Y) &
-                         " " & Integer'Image (10 * S.Z + 10 * Part_Depth));
-                    if (P = Lego.Plate_2X2_Corner and then
-                        (Spans_Three_Corners or else
-                         Corner_Stud1 /= First_Stud)) or else Is_Narrow then
-                        Put (" 0 0 1 0 1 0 -1 0 0");
-                    else
-                        Put (" 1 0 0 0 1 0 0 0 1");
-                    end if;
-                when Z_Axis =>
-                    Put (" " & Integer'Image (10 * S.X + 10 * Part_Depth) &
-                         " " & Integer'Image (8 * S.Y) &
-                         " " & Integer'Image (10 * S.Z + 10 * Part_Width));
-                    if --?? Has_Turned or else
-                      Is_Narrow then
-                        Put (" -1 0 0 0 1 0 0 0 -1");
-                    else
-                        Put (" 0 0 -1 0 1 0 1 0 0");
-                    end if;
-            end case;
-
-            if P = Lego.Plate_2X2_Corner then
-
-                -- Same oddity as above.
-                if Spans_Three_Corners then
-                    case S.Direction is
-                        when X_Axis =>
-                            S.X := S.X + 4;
-                            S.Z := S.Z + 2;
-                        when Z_Axis =>
-                            S.X := S.X + 2;
-                            S.Z := S.Z + 4;
-                    end case;
-                    S.Direction := Other (S.Direction);
-                elsif Spans_Two_Corners then
-                    if Corner_Stud1 = First_Stud then
-                        null;
-                    elsif Corner_Stud2 = Last_Stud then
-                        case S.Direction is
-                            when X_Axis =>
-                                S.X := S.X + 3;
-                                S.Z := S.Z - 1;
-                            when Z_Axis =>
-                                S.X := S.X - 1;
-                                S.Z := S.Z + 3;
-                        end case;
-                        S.Direction := Other (S.Direction);
-                    else
-                        pragma Assert (False);
-                        null;
-                    end if;
-                else
-                    case S.Direction is
-                        when X_Axis =>
-                            S.X := S.X + 5;
-                            S.Z := S.Z + 1;
-                        when Z_Axis =>
-                            S.X := S.X + 1;
-                            S.Z := S.Z + 5;
-                    end case;
-                end if;
-            elsif Spans_Corner and then Corner_Stud2 =
-                                           Last_Stud - Part_Depth + 1 then
-                case S.Direction is
-                    when X_Axis =>
-                        S.X := S.X + 2 * (Part_Width - Part_Depth);
-                        S.Z := S.Z + 2 * Part_Depth;
-                    when Z_Axis =>
-                        S.X := S.X + 2 * Part_Depth;
-                        S.Z := S.Z + 2 * (Part_Width - Part_Depth);
-                end case;
-                S.Direction := Other (S.Direction);
-            end if;
+            Put (M);
 
             Put_Line (" " & Lego.Part_Id_Image (P) & ".DAT");
 
             S.Start_Of_Row := False;
             if Last_Stud = Width then
                 S.Y            := S.Y - 1;
-                S.X            := 0;
-                S.Z            := 0;
-                S.Direction    := X_Axis;
                 S.Start_Of_Row := True;
+                S.Layout_State := Layout.Initialize (Corner, Parts);
                 if not Skip or else not Is_Top_Bottom then
                     Ada.Text_Io.Put_Line (File, "0 STEP");
                     if Bottom = null then
@@ -1241,14 +999,6 @@ begin
                                                  Integer'Image (-S.Y - 1));
                     end if;
                 end if;
-            elsif not Spans_Corner or else
-                  Corner_Stud2 /= Last_Stud - Part_Depth + 1 then
-                case S.Direction is
-                    when X_Axis =>
-                        S.X := S.X + 2 * Part_Width;
-                    when Z_Axis =>
-                        S.Z := S.Z + 2 * Part_Width;
-                end case;
             end if;
         end Output_Part;
 
@@ -1256,10 +1006,8 @@ begin
            new Process_Wall
                   (State => Output_State,
                    Initial =>
-                      (X => 0,
-                       Y => 0,
-                       Z => 0,
-                       Direction => X_Axis,
+                      (Y => 0,
+                       Layout_State => Layout.Initialize (Corner, Parts),
                        Last_Color => Lego.Color'First,
                        Start_Of_Row => True),
                    Part => Output_Part);
