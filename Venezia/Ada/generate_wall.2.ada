@@ -829,6 +829,22 @@ begin
                 Start_Of_Row : Boolean;
             end record;
 
+        function Effective_Parts (Parts : Options.Parts_Option;
+                                  Height : Positive;
+                                  Y : Integer)
+                                 return Options.Parts_Option is
+        begin
+            if Parts = Options.Tiles then
+                if Y = 1 - Height then
+                    return Options.Tiles;
+                else
+                    return Options.Plates_1Xn;
+                end if;
+            else
+                return Parts;
+            end if;
+        end Effective_Parts;
+
         procedure Output_Part (First_Stud, Last_Stud : Positive;
                                S : in out Output_State) is
             use type Lego.Color;
@@ -843,8 +859,6 @@ begin
                (Bottom /= null and then S.Y = 0) or else
                   (Top /= null and then S.Y = 1 - Height);
             Stud_Count    : constant Positive := Last_Stud - First_Stud + 1;
-            Use_Tiles     : constant Boolean  :=
-               Parts = Options.Tiles and then S.Y = 1 - Height;
 
             C      : Lego.Color;
             Is_Tee : Boolean := False;
@@ -919,6 +933,14 @@ begin
                     null;
             end case;
 
+            Layout.Append (First_Stud => First_Stud,
+                           Last_Stud => Last_Stud,
+                           S => S.Layout_State,
+                           X => X,
+                           Z => Z,
+                           M => M,
+                           Part => P);
+
             if Is_Top_Bottom then
 
                 -- A constraint line.  For historical reasons, it doesn't consume colors.
@@ -968,15 +990,7 @@ begin
                     Put (" " & Lego.Ldraw_Image (C));
             end case;
 
-            Layout.Append (First_Stud => First_Stud,
-                           Last_Stud => Last_Stud,
-                           S => S.Layout_State,
-                           X => X,
-                           Z => Z,
-                           M => M,
-                           Part => P);
-
-            Put (Integer'Image (X) & " " & Integer'Image (8 * S.Y) &
+            Put (" " & Integer'Image (X) & " " & Integer'Image (8 * S.Y) &
                  " " & Integer'Image (Z));
 
             Put (M);
@@ -987,7 +1001,13 @@ begin
             if Last_Stud = Width then
                 S.Y            := S.Y - 1;
                 S.Start_Of_Row := True;
-                S.Layout_State := Layout.Initialize (Corner, Parts);
+                S.Layout_State :=
+                   Layout.Initialize
+                      (Corners => Corner,
+                       Parts => Effective_Parts
+                                   (Parts => Parts,
+                                    Height => Height,
+                                    Y => S.Y));
                 if not Skip or else not Is_Top_Bottom then
                     Ada.Text_Io.Put_Line (File, "0 STEP");
                     if Bottom = null then
@@ -1000,6 +1020,11 @@ begin
                     end if;
                 end if;
             end if;
+        exception
+            when Layout.No_Such_Part =>
+                for I in First_Stud .. Last_Stud loop
+                    Output_Part (I, I, S);
+                end loop;
         end Output_Part;
 
         procedure Output_Wall is
@@ -1007,16 +1032,23 @@ begin
                   (State => Output_State,
                    Initial =>
                       (Y => 0,
-                       Layout_State => Layout.Initialize (Corner, Parts),
+                       Layout_State =>
+                          Layout.Initialize
+                             (Corners => Corner,
+                              Parts => Effective_Parts
+                                          (Parts => Parts,
+                                           Height => Height,
+                                           Y => 0)),
                        Last_Color => Lego.Color'First,
                        Start_Of_Row => True),
                    Part => Output_Part);
 
-        use type Lego.Color;
     begin
 
         declare
             Part_First, Part_Last : Lego.Part;
+
+            use type Lego.Color;
         begin
             case Options.Parts is
                 when Options.Plates_1Xn =>
@@ -1040,9 +1072,9 @@ begin
                     end if;
                 end loop;
             end loop;
-        end;
 
-        Output_Wall (Mozart);
+            Output_Wall (Mozart);
+        end;
     end;
 
 end Generate_Wall;
