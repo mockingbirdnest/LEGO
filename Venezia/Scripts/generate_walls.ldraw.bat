@@ -2,6 +2,7 @@ set PATH=%PATH%;C:\Rational\Apex\playground\lego.ss\wnt.ada95.wrk
 set COLOR=/color ldraw
 set NAME=ldraw
 set SHOW=/skip left_right /skip top_bottom /show tees
+rem set SHOW=/show top_bottom
 set TRACE=/trace age /trace mozart
 
 rem generate_wall %COLOR% %SHOW% %TRACE% /w 22 /h 13 /gen 500 /bottom 1344442 /top 61432141 /tee 1 /tee 7                   /out %NAME%1.ldr
@@ -60,6 +61,22 @@ rem generate_wall %COLOR% %SHOW% %TRACE% /w 64 /h 1 /seed 219 /bottom 4223312223
 rem generate_wall %COLOR% %SHOW% %TRACE% /w 18 /h 1 /bottom 22161321                                                        /out %NAME%220.ldr
 rem generate_wall %COLOR% %SHOW% %TRACE% /w 31 /h 3 /bottom 31241231114332 /right 330 /corner 3 /tee 2 /tee 4 /tee 25       /out %NAME%221.ldr
 rem generate_wall %COLOR% %SHOW% %TRACE% /w 52 /h 4 /gen 200 /seed 222 /bottom 21441212411122341213343 /right 9900 /corner 15 /corner 49 /tee 14 /tee 16 /tee 37 /out %NAME%222.ldr
-rem generate_wall %COLOR% %SHOW% %TRACE% /w 51 /h 1 /bottom 34212343432446231 /corner 11 /corner 12 /corner 15 /corner 16 /corner 22 /parts tiles /out %NAME%223.ldr
+rem generate_wall %COLOR% %SHOW% %TRACE% /w 51 /h 1 /seed 223 /bottom 34212343432446231 /corner 11 /corner 12 /corner 15 /corner 16 /corner 22 /parts tiles /out %NAME%223.ldr
 rem generate_wall %COLOR% %SHOW% %TRACE% /w 13 /h 1 /bottom 11142121 /corner 8                                              /out %NAME%224.ldr
-generate_wall %COLOR% %SHOW% %TRACE% /w 52 /h 1 /bottom 2621126121142132222243 /corner 15 /corner 49 /parts tiles       /out %NAME%225.ldr
+rem generate_wall %COLOR% %SHOW% %TRACE% /w 52 /h 1 /seed 225 /bottom 2621126121142132222243 /corner 15 /corner 49 /parts tiles /out %NAME%225.ldr
+
+rem generate_wall %COLOR% %SHOW% %TRACE% /w 36 /h 1  /bottom 262412241241221 /colorseed 4010 /corner 30 /parts plates_2xn   /out %NAME%401.ldr
+rem generate_wall %COLOR% %SHOW% %TRACE% /w 11 /h 1  /bottom 641 /parts plates_2xn                                          /out %NAME%402.ldr
+rem generate_wall %COLOR% %SHOW% %TRACE% /w 41 /h 1  /bottom 124462242114611 /corner 6 /parts plates_2xn                    /out %NAME%403.ldr
+rem generate_wall %COLOR% %SHOW% %TRACE% /w 13 /h 1  /bottom 421114 /colorseed 404000000 /parts plates_2xn                  /out %NAME%404.ldr
+rem generate_wall %COLOR% %SHOW% %TRACE% /w 2  /h 1  /parts tiles                                                           /out %NAME%405.ldr
+rem generate_wall %COLOR% %SHOW% %TRACE% /w 1  /h 1  /parts tiles                                                           /out %NAME%406.ldr
+rem generate_wall %COLOR% %SHOW% %TRACE% /w 4  /h 1  /bottom 211 /colorseed 407                                             /out %NAME%407.ldr
+rem generate_wall %COLOR% %SHOW% %TRACE% /w 32 /h 6  /seed 408 /bottom 311431344332 /corner 12 /corner 13 /corner 16 /corner 17 /corner 23 /tee 22 /tee 24 /left 111000 /top 66623234 /out %NAME%408.ldr
+rem generate_wall %COLOR% %SHOW% %TRACE% /w 23 /h 17 /seed 4090 /bottom 11341321322 /left 00000000000020000 /right 00000000000000222 /corner 12 /corner 13 /corner 16 /corner 17 /out %NAME%409.ldr
+rem generate_wall %COLOR% %SHOW% %TRACE% /w 4 /h 20 /left 00000000000000111111 /right 00000000000000111111 /bottom 4        /out %NAME%410.ldr
+rem for /L %%i in (411, 1, 412) do generate_wall %COLOR% %SHOW% %TRACE% /w 1 /h 20 /colorseed %%i                           /out %NAME%%%i.ldr
+rem generate_wall %COLOR% %SHOW% %TRACE% /w 2 /h 3                                                                          /out %NAME%413.ldr
+rem generate_wall %COLOR% %SHOW% %TRACE% /w 55 /h 6 /gen 500 /bottom 116322332114312611211242 /top 33636666646 /corner 15 /corner 49 /tee 14 /tee 16 /tee 37 /out %NAME%414.ldr
+rem generate_wall %COLOR% %SHOW% %TRACE% /w 3  /h 20  /bottom 12 /right 00000000000000111111                                /out %NAME%415.ldr
+generate_wall %COLOR% %SHOW% %TRACE% /w 43 /h 3 /seed 416 /bottom 2266222422222331 /top 3663316636 /corner 3 /corner 37 /tee 2 /tee 4 /tee 25 /out %NAME%416.ldr
