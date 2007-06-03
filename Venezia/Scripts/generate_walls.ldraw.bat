@@ -79,4 +79,8 @@ rem for /L %%i in (411, 1, 412) do generate_wall %COLOR% %SHOW% %TRACE% /w 1 /h 
 rem generate_wall %COLOR% %SHOW% %TRACE% /w 2 /h 3                                                                          /out %NAME%413.ldr
 rem generate_wall %COLOR% %SHOW% %TRACE% /w 55 /h 6 /gen 500 /bottom 116322332114312611211242 /top 33636666646 /corner 15 /corner 49 /tee 14 /tee 16 /tee 37 /out %NAME%414.ldr
 rem generate_wall %COLOR% %SHOW% %TRACE% /w 3  /h 20  /bottom 12 /right 00000000000000111111                                /out %NAME%415.ldr
-generate_wall %COLOR% %SHOW% %TRACE% /w 43 /h 3 /seed 416 /bottom 2266222422222331 /top 3663316636 /corner 3 /corner 37 /tee 2 /tee 4 /tee 25 /out %NAME%416.ldr
+rem generate_wall %COLOR% %SHOW% %TRACE% /w 43 /h 3 /seed 416 /bottom 2266222422222331 /top 3663316636 /corner 3 /corner 37 /tee 2 /tee 4 /tee 25 /out %NAME%416.ldr
+rem generate_wall %COLOR% %SHOW% %TRACE% /w 21 /h 6 /bottom 1426332 /top 322266 /corner 15 /tee 3                           /out %NAME%417.ldr
+rem generate_wall %COLOR% %SHOW% %TRACE% /w 18 /h 9 /gen 500 /bottom 1326411 /top 343143 /corner 3 /tee 2 /tee 4            /out %NAME%418.ldr
+generate_wall %COLOR% %SHOW% %TRACE% /w 3  /h 5 /bottom 21                                                              /out %NAME%419.ldr
+generate_wall %COLOR% %SHOW% %TRACE% /w 2  /h 6 /bottom 11 /top 11                                                      /out %NAME%420.ldr
