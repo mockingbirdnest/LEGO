@@ -73,7 +73,7 @@ rem generate_wall %COLOR% %SHOW% %TRACE% /w 2  /h 1  /parts tiles               
 rem generate_wall %COLOR% %SHOW% %TRACE% /w 1  /h 1  /parts tiles                                                           /out %NAME%406.ldr
 rem generate_wall %COLOR% %SHOW% %TRACE% /w 4  /h 1  /bottom 211 /colorseed 407                                             /out %NAME%407.ldr
 rem generate_wall %COLOR% %SHOW% %TRACE% /w 32 /h 6  /seed 408 /bottom 311431344332 /corner 12 /corner 13 /corner 16 /corner 17 /corner 23 /tee 22 /tee 24 /left 111000 /top 66623234 /out %NAME%408.ldr
-rem generate_wall %COLOR% %SHOW% %TRACE% /w 23 /h 17 /seed 4090 /bottom 11341321322 /left 00000000000020000 /right 00000000000000222 /corner 12 /corner 13 /corner 16 /corner 17 /out %NAME%409.ldr
+rem generate_wall %COLOR% %SHOW% %TRACE% /w 23 /h 17 /gen 500 /seed 4090 /bottom 11341321322 /left 00000000000020000 /right 00000000000000222 /corner 12 /corner 13 /corner 16 /corner 17 /out %NAME%409.ldr
 rem generate_wall %COLOR% %SHOW% %TRACE% /w 4 /h 20 /left 00000000000000111111 /right 00000000000000111111 /bottom 4        /out %NAME%410.ldr
 rem for /L %%i in (411, 1, 412) do generate_wall %COLOR% %SHOW% %TRACE% /w 1 /h 20 /colorseed %%i                           /out %NAME%%%i.ldr
 rem generate_wall %COLOR% %SHOW% %TRACE% /w 2 /h 3                                                                          /out %NAME%413.ldr
