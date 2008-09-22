@@ -76,7 +76,7 @@ rem generate_wall %COLOR% %SHOW% %TRACE% /w 32 /h 6  /seed 408 /bottom 311431344
 rem generate_wall %COLOR% %SHOW% %TRACE% /w 23 /h 17 /gen 500 /seed 4090 /bottom 11341321322 /left 00000000000020000 /right 00000000000000222 /corner 12 /corner 13 /corner 16 /corner 17 /out %NAME%409.ldr
 rem generate_wall %COLOR% %SHOW% %TRACE% /w 4 /h 20 /left 00000000000000111111 /right 00000000000000111111 /bottom 4        /out %NAME%410.ldr
 rem for /L %%i in (411, 1, 412) do generate_wall %COLOR% %SHOW% %TRACE% /w 1 /h 20 /colorseed %%i                           /out %NAME%%%i.ldr
-rem generate_wall %COLOR% %SHOW% %TRACE% /w 2 /h 3                                                                          /out %NAME%413.ldr
+generate_wall %COLOR% %SHOW% %TRACE% /w 2 /h 3 /top 11                                                                  /out %NAME%413.ldr
 rem generate_wall %COLOR% %SHOW% %TRACE% /w 55 /h 6 /gen 500 /bottom 116322332114312611211242 /top 33636666646 /corner 15 /corner 49 /tee 14 /tee 16 /tee 37 /out %NAME%414.ldr
 rem generate_wall %COLOR% %SHOW% %TRACE% /w 3  /h 20  /bottom 12 /right 00000000000000111111                                /out %NAME%415.ldr
 rem generate_wall %COLOR% %SHOW% %TRACE% /w 43 /h 3 /seed 416 /bottom 2266222422222331 /top 3663316636 /corner 3 /corner 37 /tee 2 /tee 4 /tee 25 /out %NAME%416.ldr
@@ -90,7 +90,7 @@ rem generate_wall %COLOR% %SHOW% %TRACE% /w 5  /h 1 /bottom 41                  
 rem generate_wall %COLOR% %SHOW% %TRACE% /w 7  /h 2 /bottom 1132                                                            /out %NAME%425.ldr
 rem generate_wall %COLOR% %SHOW% %TRACE% /w 10 /h 3 /bottom 112141 /top 32311 /left 001 /corner 3 /tee 2 /tee 4             /out %NAME%426.ldr
 rem generate_wall %COLOR% %SHOW% %TRACE% /w 7  /h 3 /bottom 331 /corner 2 /tee 1 /tee 3                                     /out %NAME%427.ldr
-generate_wall %COLOR% %SHOW% %TRACE% /w 13 /h 1 /bottom 11411311 /top 6421 /tee 1                                       /out %NAME%428.ldr
+rem generate_wall %COLOR% %SHOW% %TRACE% /w 13 /h 1 /bottom 11411311 /top 6421 /tee 1                                       /out %NAME%428.ldr
 rem generate_wall %COLOR% %SHOW% %TRACE% /w 15 /h 3 /bottom 3114411                                                         /out %NAME%429.ldr
 rem generate_wall %COLOR% %SHOW% %TRACE% /w 11 /h 4 /bottom 122123 /top 2261 /corner 5                                      /out %NAME%430.ldr
 rem generate_wall %COLOR% %SHOW% %TRACE% /w 40 /h 1 /bottom 121211344423131223 /top 32332232323131223 /corner 5 /corner 20 /corner 31 /corner 32 /corner 35 /corner 36 /out %NAME%431.ldr
