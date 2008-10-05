@@ -1022,6 +1022,16 @@ begin
             end if;
         exception
             when Layout.No_Such_Part =>
+                Ada.Text_Io.Put_Line
+                   (Ada.Text_Io.Standard_Error,
+                    "No such part at studs" & Positive'Image (First_Stud) &
+                       " to" & Positive'Image (Last_Stud));
+                if Parts = Options.Plates_2Xn then
+                    Ada.Text_Io.Put_Line
+                       (Ada.Text_Io.Standard_Error,
+                        "This may be an oddity due to " &
+                           Options.Parts_Option'Image (Parts));
+                end if;
                 for I in First_Stud .. Last_Stud loop
                     Output_Part (I, I, S);
                 end loop;
