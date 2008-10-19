@@ -175,10 +175,11 @@ procedure Generate_Wall is
     Trace       : constant Options.Trace_Options      := Options.Trace;
     Visibility  : constant Options.Visibility_Options := Options.Visibility;
 
-    Height : constant Positive := Options.Height +
-                                     Boolean'Pos (Bottom /= null) +
-                                     Boolean'Pos (Top /= null);
-    Width  : constant Positive := Options.Width;
+    Bottom_Height : constant Natural  := Boolean'Pos (Bottom /= null);
+    Top_Height    : constant Natural  := Boolean'Pos (Top /= null);
+    Height        : constant Positive :=
+       Options.Height + Bottom_Height + Top_Height;
+    Width         : constant Positive := Options.Width;
 
     type Separations is array (1 .. Height, 1 .. Width - 1) of Boolean;
 
@@ -203,6 +204,8 @@ procedure Generate_Wall is
     Mozart_Individual : Genetics.Individual;
     Mozart_Fitness    : Genetics.Fitness;
 
+    -- Called on each newly created genome (on the first day of creation or
+    -- after reproduction) to make sure that it satisfies the constraints.
     procedure Apply_Constraints (Genome : in out Genetics.Genome) is
         First, Last : Genetics.Gene'Base;
         use type Genetics.Gene;
@@ -268,10 +271,10 @@ procedure Generate_Wall is
 
         After_Corner            : Boolean;
         At_Edge_Of_Aligned_Rows : Boolean;
-        Column                  : Natural;
+        Column                  : Positive range 1 .. Width - 1;
         Part_Width              : Natural;
         Result                  : Genetics.Fitness := 0.0;
-        Row                     : Positive;
+        Row                     : Positive range 1 .. Height;
         Spans_Corner            : Boolean          := False;
 
         use type Genetics.Fitness;
@@ -368,7 +371,9 @@ procedure Generate_Wall is
                     end if;
                 end if;
                 Part_Width := 0;
-                Row        := Row + 1;
+                if Row < Height then
+                    Row := Row + 1;
+                end if;
             else
                 if Genome (I) then
                     if Left = null or else Column > Left (Row) then
@@ -385,9 +390,7 @@ procedure Generate_Wall is
                 end if;
             end if;
 
-            if (Bottom = null or else Row > 1) and then
-               (Top = null or else Row < Height) then
-
+            if Row in Bottom_Height + 1 .. Height - Top_Height then
                 if After_Corner then
 
                     if Parts = Options.Plates_2Xn then
@@ -571,7 +574,7 @@ procedure Generate_Wall is
                           S : in out Trace_State) is
         Width_Indicator :
            constant array (Positive range <>) of Character :=
-           "123456789ABCDEFGHIJKLM";
+           "123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         Part_Width      : constant Positive                :=
            Last_Stud - First_Stud + 1;
     begin
@@ -676,15 +679,15 @@ begin
 
         if Options.Left /= null then
             Left := new Options.Constraint_Array'
-                           ((1 .. Boolean'Pos (Bottom /= null) => 0) &
+                           ((1 .. Bottom_Height => 0) &
                             Options.Left.all &
-                            (1 .. Boolean'Pos (Top /= null) => 0));
+                            (1 .. Top_Height => 0));
         end if;
         if Options.Right /= null then
             Right := new Options.Constraint_Array'
-                            ((1 .. Boolean'Pos (Bottom /= null) => 0) &
+                            ((1 .. Bottom_Height => 0) &
                              Options.Right.all &
-                             (1 .. Boolean'Pos (Top /= null) => 0));
+                             (1 .. Top_Height => 0));
         end if;
 
         -- Random population at the beginning.
