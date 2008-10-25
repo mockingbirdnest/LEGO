@@ -48,10 +48,12 @@ package Genetics is
                                   S : Access_All_State);
 
     generic
+        type Options is private;
         with function Compute_Fitness
-                         (G : Genome; I : Individual) return Fitness;
+                         (G : Genome; I : Individual; O : Options)
+                         return Fitness;
     function Compute_Fitnesses
-                (P : Access_Constant_Population) return Fitnesses;
+                (P : Access_Constant_Population; O : Options) return Fitnesses;
 
 private
     type Array_Of_Fitness is array (Individual'Base range <>) of Fitness;

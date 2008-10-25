@@ -15,7 +15,7 @@ package Options is
     type Position_Array is array (Positive range <>) of Natural;
     type Positions is access Position_Array;
 
-    type Trace_Kind is (Age, Genome, Mozart);
+    type Trace_Kind is (Age, Genome, Imperfections, Mozart);
     type Trace_Options is array (Trace_Kind) of Boolean;
     pragma Convention (Ada_Pass_By_Reference, Trace_Options);
 

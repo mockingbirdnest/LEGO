@@ -204,6 +204,17 @@ procedure Generate_Wall is
     Mozart_Individual : Genetics.Individual;
     Mozart_Fitness    : Genetics.Fitness;
 
+    procedure Trace_Imperfection
+                 (Trace : Boolean; Row : Positive; Column : Positive) is
+    begin
+        if Trace then
+            Ada.Text_Io.Put_Line (Ada.Text_Io.Standard_Error,
+                                  "separation at row" &
+                                     Positive'Image (Row) & ", column" &
+                                     Positive'Image (Column));
+        end if;
+    end Trace_Imperfection;
+
     -- Called on each newly created genome (on the first day of creation or
     -- after reproduction) to make sure that it satisfies the constraints.
     procedure Apply_Constraints (Genome : in out Genetics.Genome) is
@@ -233,34 +244,78 @@ procedure Generate_Wall is
             end loop;
         end if;
         if Left /= null then
-            for I in Left'Range loop
-                First :=
-                   Genetics.Gene'Base (I - Left'First) * Width_Minus_One +
-                      Genome'First;
-                if Left (I) > 0 then
-                    Last                       :=
-                       First + Genetics.Gene'Base (Left (I)) - 1;
-                    Genome (First .. Last - 1) := (others => False);
-                    Genome (Last)              := True;
-                end if;
-            end loop;
+
+            declare
+                -- Use the top constraint as long as it has an effect on the left
+                -- constraint.
+                Use_Top : Boolean := Top /= null and then
+                                        Left (Left'Last - Top_Height) > 0;
+            begin
+                for I in reverse Left'First + Bottom_Height ..
+                                    Left'Last - Top_Height loop
+                    First :=
+                       Genetics.Gene'Base (I - Left'First) * Width_Minus_One +
+                          Genome'First;
+                    if Left (I) > 0 then
+                        Last :=
+                           First + Genetics.Gene'Base (Left (I)) - 1;
+                        if Use_Top then
+                            Genome (First .. Last - 1) :=
+                               Genome (Genome'Last - Width_Minus_One + 1 ..
+                                          Genome'Last - Width_Minus_One +
+                                             Genetics.Gene'Base (Left (I)) - 1);
+                        else
+                            Genome (First .. Last - 1) := (others => False);
+                        end if;
+                        Genome (Last) := True;
+                    end if;
+                    if I < Left'Last - Top_Height and then
+                       Left (I) > Left (I + 1) then
+                        Use_Top := False;
+                    end if;
+                end loop;
+            end;
+
         end if;
         if Right /= null then
-            for I in Right'Range loop
-                Last :=
-                   Genetics.Gene'Base (I - Right'First + 1) * Width_Minus_One;
-                if Right (I) > 0 then
-                    First                      :=
-                       Last - Genetics.Gene'Base (Right (I)) + 1;
-                    Genome (First + 1 .. Last) := (others => False);
-                    Genome (First)             := True;
-                end if;
-            end loop;
+
+            declare
+                -- Use the top constraint as long as it has an effect on the right
+                -- constraint.
+                Use_Top : Boolean := Top /= null and then
+                                        Right (Right'Last - Top_Height) > 0;
+            begin
+                for I in reverse Right'First + Bottom_Height ..
+                                    Right'Last - Top_Height loop
+                    Last :=
+                       Genetics.Gene'Base (I - Right'First + 1) *
+                          Width_Minus_One;
+                    if Right (I) > 0 then
+                        First :=
+                           Last - Genetics.Gene'Base (Right (I)) + 1;
+                        if Use_Top then
+                            Genome (First + 1 .. Last) :=
+                               Genome (Genome'Last -
+                                       Genetics.Gene'Base (Right (I)) + 2 ..
+                                          Genome'Last);
+                        else
+                            Genome (First + 1 .. Last) := (others => False);
+                        end if;
+                        Genome (First) := True;
+                    end if;
+                    if I < Right'Last - Top_Height and then
+                       Right (I) > Right (I + 1) then
+                        Use_Top := False;
+                    end if;
+                end loop;
+            end;
+
         end if;
     end Apply_Constraints;
 
     function Compute_Fitness (Genome : Genetics.Genome;
-                              Individual : Genetics.Individual)
+                              Individual : Genetics.Individual;
+                              Trace : Boolean)
                              return Genetics.Fitness is
         Corner_Cost     : constant := 2.0;
         Tee_Cost        : constant := 0.1;
@@ -269,13 +324,17 @@ procedure Generate_Wall is
         Anchors : array (1 .. Options.Length (Tee)) of Natural :=
            (others => 0);
 
-        After_Corner            : Boolean;
-        At_Edge_Of_Aligned_Rows : Boolean;
-        Column                  : Positive range 1 .. Width - 1;
-        Part_Width              : Natural;
-        Result                  : Genetics.Fitness := 0.0;
-        Row                     : Positive range 1 .. Height;
-        Spans_Corner            : Boolean          := False;
+        After_Corner             : Boolean;
+        At_Edge_Of_Aligned_Rows  : Boolean;
+        Column                   : Positive range 1 .. Width - 1;
+        Deep_In_Left_Constraint  : Boolean;
+        Deep_In_Right_Constraint : Boolean;
+        In_Left_Constraint       : Boolean;
+        In_Right_Constraint      : Boolean;
+        Part_Width               : Natural;
+        Result                   : Genetics.Fitness := 0.0;
+        Row                      : Positive range 1 .. Height;
+        Spans_Corner             : Boolean          := False;
 
         use type Genetics.Fitness;
 
@@ -347,6 +406,25 @@ procedure Generate_Wall is
                 end loop;
             end if;
 
+            -- True if the current separation is in the left/right constraint.  For the top
+            -- row, we look at the left/right constraint of the row below.
+            In_Left_Constraint  :=
+               Left /= null and then
+                  Column <= Left (Positive'Min (Row, Height - Top_Height));
+            In_Right_Constraint :=
+               Right /= null and then
+                  Column >= Width - Right (Positive'Min (Row,
+                                                         Height - Top_Height));
+
+            -- True if the current separation is in the left/right constraint, and the
+            -- separation immediately below is, too.
+            Deep_In_Left_Constraint  :=
+               In_Left_Constraint and then Row > 1 and then
+                  Column <= Left (Row - 1);
+            Deep_In_Right_Constraint :=
+               In_Right_Constraint and then Row > 1 and then
+                  Column >= Width - Right (Row - 1);
+
             -- Here Part_Width is the width of the part being constructed.
             if Column = Positive (Width_Minus_One) then
 
@@ -358,12 +436,14 @@ procedure Generate_Wall is
                     Spans_Corner := False;
                     if Row > 1 and then
                        not At_Edge_Of_Aligned_Rows and then
-                       Genome (I - Width_Minus_One) then
+                       Genome (I - Width_Minus_One) and then
+                       not Deep_In_Left_Constraint and then
+                       not Deep_In_Right_Constraint then
                         Result := Result + Separation_Cost;
+                        Trace_Imperfection (Trace, Row, Column);
                     end if;
                 else
-                    if Right = null or else Column <
-                                               Width - Right (Row) then
+                    if not In_Right_Constraint then
                         Result       :=
                            Result + Part_Cost
                                        (Part_Width + 1, Spans_Corner);
@@ -376,7 +456,7 @@ procedure Generate_Wall is
                 end if;
             else
                 if Genome (I) then
-                    if Left = null or else Column > Left (Row) then
+                    if not In_Left_Constraint then
                         Result       := Result + Part_Cost
                                                     (Part_Width, Spans_Corner);
                         Spans_Corner := False;
@@ -384,8 +464,11 @@ procedure Generate_Wall is
                     Part_Width := 0;
                     if Row > 1 and then
                        not At_Edge_Of_Aligned_Rows and then
-                       Genome (I - Width_Minus_One) then
+                       Genome (I - Width_Minus_One) and then
+                       not Deep_In_Left_Constraint and then
+                       not Deep_In_Right_Constraint then
                         Result := Result + Separation_Cost;
+                        Trace_Imperfection (Trace, Row, Column);
                     end if;
                 end if;
             end if;
@@ -652,7 +735,7 @@ procedure Generate_Wall is
                Process_Subpopulation => Beget_Children);
 
     function Compute_Fitnesses is
-       new Genetics.Compute_Fitnesses (Compute_Fitness);
+       new Genetics.Compute_Fitnesses (Boolean, Compute_Fitness);
 
     procedure Trace_Wall is new Process_Wall
                                    (State => Trace_State,
@@ -711,7 +794,7 @@ begin
             Has_Mozart   := False;
             Fitnesses    :=
                Compute_Fitnesses
-                  (Genetics.Access_Constant_Population (Current));
+                  (Genetics.Access_Constant_Population (Current), False);
 
             -- Print the best individual.
             exit when Best_Fitness = 1.0;
@@ -755,6 +838,12 @@ begin
                                   "Mozart" &
                                      Genetics.Fitness'Image (Mozart_Fitness));
             Trace_Wall (Mozart);
+
+            -- For tracing.
+            pragma Assert (not Trace (Options.Imperfections) or else
+                           Mozart_Fitness =
+                              Compute_Fitness
+                                 (Mozart, Mozart_Individual, True));
         end if;
 
     end if;

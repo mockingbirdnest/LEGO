@@ -204,7 +204,8 @@ package body Genetics is
     end Process_Population;
 
     function Compute_Fitnesses
-                (P : Access_Constant_Population) return Fitnesses is
+                (P : Access_Constant_Population; O : Options)
+                return Fitnesses is
 
         procedure Compute_Range_Of_Individual_Fitnesses
                      (Population : Access_Constant_Population;
@@ -213,7 +214,7 @@ package body Genetics is
         begin
             for I in First .. Last loop
                 Fitnesses.Individual (I) :=
-                   Compute_Fitness (Population (I), I);
+                   Compute_Fitness (Population (I), I, O);
             end loop;
         end Compute_Range_Of_Individual_Fitnesses;
 

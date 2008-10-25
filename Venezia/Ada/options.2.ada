@@ -182,14 +182,17 @@ package body Options is
         Put_Line (Current_Error,
                   "  /top widths:none" & Ht & Ht &
                      "Widths constraining the top row, e.g. 12461");
-        Put_Line (Current_Error,
-                  "  /trace age|genome|mozart" & Ht &
-                     "Traces evolution" & Lf &
-                     Ht & Ht & Ht & Ht &
-                     "age: generation number and best fitness" & Lf &
-                     Ht & Ht & Ht & Ht &
-                     "genome: best genome of each generation" & Lf &
-                     Ht & Ht & Ht & Ht & "mozart: best genome found so far");
+        Put_Line
+           (Current_Error,
+            "  /trace age|genome|imperfections|mozart" & Ht &
+               "Traces evolution" & Lf &
+               Ht & Ht & Ht & Ht &
+               "age: generation number and best fitness" & Lf &
+               Ht & Ht & Ht & Ht &
+               "genome: best genome of each generation" & Lf &
+               Ht & Ht & Ht & Ht &
+               "imperfections: lists imperfections of the final mozart" & Lf &
+               Ht & Ht & Ht & Ht & "mozart: best genome found so far");
         Put_Line (Current_Error, "  /width n" & Ht & Ht & Ht &
                                     "Total width in studs; mandatory");
         Error := True;
