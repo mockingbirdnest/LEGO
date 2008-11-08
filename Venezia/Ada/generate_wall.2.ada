@@ -204,17 +204,6 @@ procedure Generate_Wall is
     Mozart_Individual : Genetics.Individual;
     Mozart_Fitness    : Genetics.Fitness;
 
-    procedure Trace_Imperfection
-                 (Trace : Boolean; Row : Positive; Column : Positive) is
-    begin
-        if Trace then
-            Ada.Text_Io.Put_Line (Ada.Text_Io.Standard_Error,
-                                  "separation at row" &
-                                     Positive'Image (Row) & ", column" &
-                                     Positive'Image (Column));
-        end if;
-    end Trace_Imperfection;
-
     -- Called on each newly created genome (on the first day of creation or
     -- after reproduction) to make sure that it satisfies the constraints.
     procedure Apply_Constraints (Genome : in out Genetics.Genome) is
@@ -317,12 +306,15 @@ procedure Generate_Wall is
                               Individual : Genetics.Individual;
                               Trace : Boolean)
                              return Genetics.Fitness is
-        Corner_Cost     : constant := 2.0;
-        Tee_Cost        : constant := 0.1;
-        Separation_Cost : constant := 1.0;
+        type Imperfection_Kind is (Corner_Imperfection, Part_Imperfection,
+                                   Separation_Imperfection, Tee_Imperfection);
 
         Anchors : array (1 .. Options.Length (Tee)) of Natural :=
            (others => 0);
+
+        Corner_Cost     : constant := 2.0;
+        Tee_Cost        : constant := 0.1;
+        Separation_Cost : constant := 1.0;
 
         After_Corner             : Boolean;
         At_Edge_Of_Aligned_Rows  : Boolean;
@@ -337,6 +329,30 @@ procedure Generate_Wall is
         Spans_Corner             : Boolean          := False;
 
         use type Genetics.Fitness;
+
+        procedure Trace_Imperfection (Kind : Imperfection_Kind) is
+        begin
+            if Trace then
+                case Kind is
+                    when Corner_Imperfection =>
+                        Ada.Text_Io.Put (Ada.Text_Io.Standard_Error,
+                                         "Misplaced corner");
+                    when Part_Imperfection =>
+                        Ada.Text_Io.Put (Ada.Text_Io.Standard_Error,
+                                         "Inexistent part");
+                    when Separation_Imperfection =>
+                        Ada.Text_Io.Put_Line
+                           (Ada.Text_Io.Standard_Error, "Separation");
+                    when Tee_Imperfection =>
+                        Ada.Text_Io.Put (Ada.Text_Io.Standard_Error,
+                                         "Inappropriate tees");
+                end case;
+                Ada.Text_Io.Put_Line
+                   (Ada.Text_Io.Standard_Error,
+                    " at row" & Positive'Image (Row) &
+                       ", column" & Positive'Image (Column));
+            end if;
+        end Trace_Imperfection;
 
         function Part_Cost (Width : Positive; Spans_Corner : Boolean)
                            return Genetics.Fitness is
@@ -354,6 +370,7 @@ procedure Generate_Wall is
                                 -- In horizontal constraint.
                                 return 0.0;
                             else
+                                Trace_Imperfection (Part_Imperfection);
                                 return Genetics.Fitness (Width);
                             end if;
                     end case;
@@ -362,11 +379,13 @@ procedure Generate_Wall is
                        Spans_Corner then
                         return 0.0;
                     else
+                        Trace_Imperfection (Part_Imperfection);
                         return Genetics.Fitness (Width);
                     end if;
                 when 6 =>
                     if Options.Parts = Options.Plates_2Xn and then
                        Spans_Corner then
+                        Trace_Imperfection (Part_Imperfection);
                         return Genetics.Fitness (Width);
                     else
                         return 0.0;
@@ -374,6 +393,7 @@ procedure Generate_Wall is
                 when 8 =>
                     return 0.1;
                 when others =>
+                    Trace_Imperfection (Part_Imperfection);
                     return Genetics.Fitness (Width);
             end case;
         end Part_Cost;
@@ -440,7 +460,7 @@ procedure Generate_Wall is
                        not Deep_In_Left_Constraint and then
                        not Deep_In_Right_Constraint then
                         Result := Result + Separation_Cost;
-                        Trace_Imperfection (Trace, Row, Column);
+                        Trace_Imperfection (Separation_Imperfection);
                     end if;
                 else
                     if not In_Right_Constraint then
@@ -468,7 +488,7 @@ procedure Generate_Wall is
                        not Deep_In_Left_Constraint and then
                        not Deep_In_Right_Constraint then
                         Result := Result + Separation_Cost;
-                        Trace_Imperfection (Trace, Row, Column);
+                        Trace_Imperfection (Separation_Imperfection);
                     end if;
                 end if;
             end if;
@@ -480,6 +500,7 @@ procedure Generate_Wall is
                         if Genome (I) or else Genome (I - 1) then
 
                             -- This is an 1xN or Nx1 corner.  Hard to do with 2xn parts.
+                            Trace_Imperfection (Corner_Imperfection);
                             Result := Result + Corner_Cost;
                         elsif Column = 2 or else
                               Genome (I - 2) or else
@@ -491,6 +512,7 @@ procedure Generate_Wall is
                             null;
                         else
                             -- This is not a corner that we like.
+                            Trace_Imperfection (Corner_Imperfection);
                             Result := Result + Corner_Cost;
                         end if;
                     else
@@ -511,6 +533,7 @@ procedure Generate_Wall is
                                 when Options.Plates_1Xn =>
                                     null;
                                 when Options.Tiles =>
+                                    Trace_Imperfection (Corner_Imperfection);
                                     Result := Result + Corner_Cost;
                                 when Options.Plates_2Xn =>
                                     pragma Assert (False);
@@ -518,6 +541,7 @@ procedure Generate_Wall is
                             end case;
                         else
                             -- This is not a corner that we like.
+                            Trace_Imperfection (Corner_Imperfection);
                             Result := Result + Corner_Cost;
                         end if;
                     end if;
@@ -571,6 +595,7 @@ procedure Generate_Wall is
                 Hi         : Genetics.Fitness :=
                    Genetics.Fitness (Options.Height) / 2.0;
                 Correction : Genetics.Fitness;
+                Tee_Factor : Genetics.Fitness;
             begin
                 -- Make sure that we have at least 3 values that are considered "good".
                 if Hi - Lo < 4.0 then
@@ -579,12 +604,14 @@ procedure Generate_Wall is
                     Hi         := Hi + Correction;
                 end if;
                 for J in Tee'Range loop
-                    Result :=
-                       Result +
-                          Genetics.Fitness'Max
-                             (0.0, Tee_Cost *
-                                      (Genetics.Fitness (Anchors (J)) - Lo) *
-                                      (Genetics.Fitness (Anchors (J)) - Hi));
+                    Tee_Factor :=
+                       Genetics.Fitness'Max
+                          (0.0, (Genetics.Fitness (Anchors (J)) - Lo) *
+                                   (Genetics.Fitness (Anchors (J)) - Hi));
+                    if Tee_Factor > 0.0 then
+                        Trace_Imperfection (Tee_Imperfection);
+                        Result := Result + Tee_Factor * Tee_Cost;
+                    end if;
                 end loop;
             end;
 
