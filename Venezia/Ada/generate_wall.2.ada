@@ -590,12 +590,12 @@ procedure Generate_Wall is
         if Tee /= null then
 
             declare
-                Lo         : Genetics.Fitness :=
+                Original_Result : constant Genetics.Fitness := Result;
+                Lo              : Genetics.Fitness          :=
                    Genetics.Fitness (Options.Height) / 3.0;
-                Hi         : Genetics.Fitness :=
+                Hi              : Genetics.Fitness          :=
                    Genetics.Fitness (Options.Height) / 2.0;
-                Correction : Genetics.Fitness;
-                Tee_Factor : Genetics.Fitness;
+                Correction      : Genetics.Fitness;
             begin
                 -- Make sure that we have at least 3 values that are considered "good".
                 if Hi - Lo < 4.0 then
@@ -603,16 +603,21 @@ procedure Generate_Wall is
                     Lo         := Lo - Correction;
                     Hi         := Hi + Correction;
                 end if;
+                -- Beware!  This loop seems to be very sensitive to (apparently) neutral
+                -- code transformations.  Perhaps because of floating-point optimizations,
+                -- who knows.  At any rate, any change should be checked using the
+                -- regression test. 
                 for J in Tee'Range loop
-                    Tee_Factor :=
-                       Genetics.Fitness'Max
-                          (0.0, (Genetics.Fitness (Anchors (J)) - Lo) *
-                                   (Genetics.Fitness (Anchors (J)) - Hi));
-                    if Tee_Factor > 0.0 then
-                        Trace_Imperfection (Tee_Imperfection);
-                        Result := Result + Tee_Factor * Tee_Cost;
-                    end if;
+                    Result :=
+                       Result +
+                          Genetics.Fitness'Max
+                             (0.0, Tee_Cost *
+                                      (Genetics.Fitness (Anchors (J)) - Lo) *
+                                      (Genetics.Fitness (Anchors (J)) - Hi));
                 end loop;
+                if Result /= Original_Result then
+                    Trace_Imperfection (Tee_Imperfection);
+                end if;
             end;
 
         end if;
