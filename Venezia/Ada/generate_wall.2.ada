@@ -1,3 +1,4 @@
+with Ada.Float_Text_Io;
 with Ada.Numerics.Float_Random;
 with Ada.Numerics.Generic_Elementary_Functions;
 with Ada.Text_Io;
@@ -9,6 +10,8 @@ with Options;
 procedure Generate_Wall is
 
     package Anfr renames Ada.Numerics.Float_Random;
+
+    K : Integer := 0;
 
     use type Lego.Part;
     use type Options.Constraint;
@@ -302,13 +305,155 @@ procedure Generate_Wall is
         end if;
     end Apply_Constraints;
 
+
+
+    generic
+        type State is private;
+        Initial : in State;
+        with procedure Part (First_Stud, Last_Stud : Positive;
+                             S : in out State);
+    procedure Process_Wall (Genome : Genetics.Genome);
+
+    procedure Process_Wall (Genome : Genetics.Genome) is
+        Has_Separation : Separations;
+        Part_Width     : Natural;
+        S              : State;
+    begin
+        S := Initial;
+
+        declare
+            C : Integer;
+        begin
+            C := 0;
+            for H in 1 .. Height loop
+                for W in 1 .. Width - 1 loop
+                    Has_Separation (H, W) := Genome (Genetics.Gene (C + W));
+                end loop;
+                C := C + Width - 1;
+            end loop;
+        end;
+
+        for H in 1 .. Height loop
+            Part_Width := 1;
+            for W in 1 .. Width - 1 loop
+                if Has_Separation (H, W) then
+                    Part (First_Stud => W - Part_Width + 1,
+                          Last_Stud => W,
+                          S => S);
+                    Part_Width := 1;
+                else
+                    Part_Width := Part_Width + 1;
+                end if;
+            end loop;
+            Part (First_Stud => Width - Part_Width + 1,
+                  Last_Stud => Width,
+                  S => S);
+        end loop;
+    end Process_Wall;
+
+    type Trace_State is null record;
+
+    procedure Trace_Part (First_Stud, Last_Stud : Positive;
+                          S : in out Trace_State) is
+        Width_Indicator :
+           constant array (Positive range <>) of Character :=
+           "123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        Part_Width      : constant Positive                :=
+           Last_Stud - First_Stud + 1;
+    begin
+        if Part_Width = 1 then
+            Ada.Text_Io.Put (Ada.Text_Io.Standard_Error, '|');
+        else
+            Ada.Text_Io.Put (Ada.Text_Io.Standard_Error, '[');
+            for I in 1 .. Part_Width - 2 loop
+                Ada.Text_Io.Put (Ada.Text_Io.Standard_Error,
+                                 Width_Indicator (Part_Width));
+            end loop;
+            Ada.Text_Io.Put (Ada.Text_Io.Standard_Error, ']');
+        end if;
+        if Last_Stud = Width then
+            Ada.Text_Io.New_Line (Ada.Text_Io.Standard_Error);
+        end if;
+    end Trace_Part;
+
+
+    type Reproduction_State is
+        record
+            Children  : Genetics.Access_All_Population;
+            Fitnesses : Genetics.Access_Constant_Fitnesses;
+        end record;
+    pragma Convention (Ada_Pass_By_Reference,
+                       Reproduction_State); -- To avoid a warning.
+
+    type Access_All_Reproduction_State is access all Reproduction_State;
+    for Access_All_Reproduction_State'Storage_Size use 0;
+
+    procedure Beget_Children (P : Genetics.Access_Constant_Population;
+                              First, Last : Genetics.Individual;
+                              S : Access_All_Reproduction_State) is
+        package Randomizer is new Genetics.Randomizer (Seed);
+    begin
+        for I in First .. Last loop
+
+            declare
+                Parent1 : constant Genetics.Individual :=
+                   Randomizer.Pick (S.Fitnesses);
+                Parent2 : Genetics.Individual;
+
+                use type Genetics.Individual;
+            begin
+
+                -- Avoid self-fecundation.
+                loop
+                    Parent2 := Randomizer.Pick (S.Fitnesses);
+                    exit when Parent1 /= Parent2;
+                end loop;
+
+                case Crossover is
+
+                    when 1 =>
+                        Randomizer.One_Point_Crossover
+                           (P (Parent1),
+                            P (Parent2), S.Children (I));
+
+                    when 2 =>
+                        Randomizer.Two_Point_Crossover
+                           (P (Parent1),
+                            P (Parent2), S.Children (I));
+                end case;
+                Randomizer.Mutate (S.Children (I));
+                Apply_Constraints (S.Children (I));
+            end;
+
+        end loop;
+    end Beget_Children;
+
+    procedure Beget_Children is
+       new Genetics.Process_Population
+              (State => Reproduction_State,
+               Access_All_State => Access_All_Reproduction_State,
+               Process_Subpopulation => Beget_Children);
+
+    procedure Trace_Wall is new Process_Wall
+                                   (State => Trace_State,
+                                    Initial => (null record),
+                                    Part => Trace_Part);
+
+    P1 : aliased Genetics.Population;
+    P2 : aliased Genetics.Population;
+
+    Current   : Genetics.Access_All_Population;
+    Next      : Genetics.Access_All_Population;
+    Fitnesses : aliased Genetics.Fitnesses;
+    Age       : Positive;
+
     function Compute_Fitness (Genome : Genetics.Genome;
                               Individual : Genetics.Individual;
                               Trace : Boolean)
                              return Genetics.Fitness is
         type Imperfection_Kind is (Corner_Imperfection, Part_Imperfection,
                                    Separation_Imperfection, Tee_Imperfection);
-
+        use type Genetics.Individual;
         Anchors : array (1 .. Options.Length (Tee)) of Natural :=
            (others => 0);
 
@@ -587,6 +732,16 @@ procedure Generate_Wall is
             end if;
         end loop;
 
+        if Age = 1 and then Individual = 20 then
+            Ada.Text_Io.Put (Ada.Text_Io.Standard_Error, "result1 = ");
+            Ada.Float_Text_Io.Put (File => Ada.Text_Io.Standard_Error,
+                                   Item => Float (Result),
+                                   Fore => 1,
+                                   Aft => 20,
+                                   Exp => 0);
+            Ada.Text_Io.New_Line (Ada.Text_Io.Standard_Error);
+        end if;
+
         if Tee /= null then
 
             declare
@@ -622,165 +777,62 @@ procedure Generate_Wall is
 
         end if;
 
-        Result := Ef.Exp (-100.0 * Result /
-                           Genetics.Fitness (Height * Width));
-
-        if Result > Best_Fitness then
-            Best_Fitness    := Result;
-            Best_Individual := Individual;
-            if Best_Fitness > Mozart_Fitness then
-                Has_Mozart        := True;
-                Mozart_Fitness    := Best_Fitness;
-                Mozart_Individual := Best_Individual;
-                Mozart            := Genome;
-            end if;
+        if Age = 1 and then Individual = 20 then
+            Ada.Text_Io.Put (Ada.Text_Io.Standard_Error, "result2 = ");
+            Ada.Float_Text_Io.Put (File => Ada.Text_Io.Standard_Error,
+                                   Item => Float (Result),
+                                   Fore => 1,
+                                   Aft => 20,
+                                   Exp => 0);
+            Ada.Text_Io.New_Line (Ada.Text_Io.Standard_Error);
         end if;
+
+        declare
+            X : Genetics.Fitness := -100.0 * Result /
+                                     Genetics.Fitness (Height * Width);
+        begin
+            Result := Ef.Exp (X);
+
+            if Result > Best_Fitness then
+                Best_Fitness    := Result;
+                Best_Individual := Individual;
+                if Best_Fitness > Mozart_Fitness then
+                    Has_Mozart        := True;
+                    Mozart_Fitness    := Best_Fitness;
+                    Mozart_Individual := Best_Individual;
+                    Mozart            := Genome;
+                end if;
+            end if;
+
+            -- Ada.Text_Io.Put (Ada.Text_Io.Standard_Error, "X = ");
+            -- Ada.Float_Text_Io.Put (File => Ada.Text_Io.Standard_Error,
+            --                        Item => Float (X),
+            --                        Fore => 1,
+            --                        Aft => 20,
+            --                        Exp => 0);
+            Ada.Text_Io.Put (Ada.Text_Io.Standard_Error, "Fitness = ");
+            Ada.Float_Text_Io.Put (File => Ada.Text_Io.Standard_Error,
+                                   Item => Float (Result),
+                                   Fore => 1,
+                                   Aft => 20,
+                                   Exp => 0);
+            Ada.Text_Io.New_Line (Ada.Text_Io.Standard_Error);
+            if K > 15 then
+                Ada.Text_Io.Put_Line (Ada.Text_Io.Standard_Error,
+                                      "Age = " & Integer'Image (Age));
+                Ada.Text_Io.Put_Line
+                   (Ada.Text_Io.Standard_Error,
+                    "Individual = " & Genetics.Individual'Image (Individual));
+                Trace_Wall (Genome);
+            end if;
+            K := K + 1;
+        end;
+
         return Result;
     end Compute_Fitness;
 
-
-    generic
-        type State is private;
-        Initial : in State;
-        with procedure Part (First_Stud, Last_Stud : Positive;
-                             S : in out State);
-    procedure Process_Wall (Genome : Genetics.Genome);
-
-    procedure Process_Wall (Genome : Genetics.Genome) is
-        Has_Separation : Separations;
-        Part_Width     : Natural;
-        S              : State;
-    begin
-        S := Initial;
-
-        declare
-            C : Integer;
-        begin
-            C := 0;
-            for H in 1 .. Height loop
-                for W in 1 .. Width - 1 loop
-                    Has_Separation (H, W) := Genome (Genetics.Gene (C + W));
-                end loop;
-                C := C + Width - 1;
-            end loop;
-        end;
-
-        for H in 1 .. Height loop
-            Part_Width := 1;
-            for W in 1 .. Width - 1 loop
-                if Has_Separation (H, W) then
-                    Part (First_Stud => W - Part_Width + 1,
-                          Last_Stud => W,
-                          S => S);
-                    Part_Width := 1;
-                else
-                    Part_Width := Part_Width + 1;
-                end if;
-            end loop;
-            Part (First_Stud => Width - Part_Width + 1,
-                  Last_Stud => Width,
-                  S => S);
-        end loop;
-    end Process_Wall;
-
-    type Trace_State is null record;
-
-    procedure Trace_Part (First_Stud, Last_Stud : Positive;
-                          S : in out Trace_State) is
-        Width_Indicator :
-           constant array (Positive range <>) of Character :=
-           "123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        Part_Width      : constant Positive                :=
-           Last_Stud - First_Stud + 1;
-    begin
-        if Part_Width = 1 then
-            Ada.Text_Io.Put (Ada.Text_Io.Standard_Error, '|');
-        else
-            Ada.Text_Io.Put (Ada.Text_Io.Standard_Error, '[');
-            for I in 1 .. Part_Width - 2 loop
-                Ada.Text_Io.Put (Ada.Text_Io.Standard_Error,
-                                 Width_Indicator (Part_Width));
-            end loop;
-            Ada.Text_Io.Put (Ada.Text_Io.Standard_Error, ']');
-        end if;
-        if Last_Stud = Width then
-            Ada.Text_Io.New_Line (Ada.Text_Io.Standard_Error);
-        end if;
-    end Trace_Part;
-
-
-    type Reproduction_State is
-        record
-            Children  : Genetics.Access_All_Population;
-            Fitnesses : Genetics.Access_Constant_Fitnesses;
-        end record;
-    pragma Convention (Ada_Pass_By_Reference,
-                       Reproduction_State); -- To avoid a warning.
-
-    type Access_All_Reproduction_State is access all Reproduction_State;
-    for Access_All_Reproduction_State'Storage_Size use 0;
-
-    procedure Beget_Children (P : Genetics.Access_Constant_Population;
-                              First, Last : Genetics.Individual;
-                              S : Access_All_Reproduction_State) is
-        package Randomizer is new Genetics.Randomizer (Seed);
-    begin
-        for I in First .. Last loop
-
-            declare
-                Parent1 : constant Genetics.Individual :=
-                   Randomizer.Pick (S.Fitnesses);
-                Parent2 : Genetics.Individual;
-
-                use type Genetics.Individual;
-            begin
-
-                -- Avoid self-fecundation.
-                loop
-                    Parent2 := Randomizer.Pick (S.Fitnesses);
-                    exit when Parent1 /= Parent2;
-                end loop;
-
-                case Crossover is
-
-                    when 1 =>
-                        Randomizer.One_Point_Crossover
-                           (P (Parent1),
-                            P (Parent2), S.Children (I));
-
-                    when 2 =>
-                        Randomizer.Two_Point_Crossover
-                           (P (Parent1),
-                            P (Parent2), S.Children (I));
-                end case;
-                Randomizer.Mutate (S.Children (I));
-                Apply_Constraints (S.Children (I));
-            end;
-
-        end loop;
-    end Beget_Children;
-
-    procedure Beget_Children is
-       new Genetics.Process_Population
-              (State => Reproduction_State,
-               Access_All_State => Access_All_Reproduction_State,
-               Process_Subpopulation => Beget_Children);
-
     function Compute_Fitnesses is
        new Genetics.Compute_Fitnesses (Boolean, Compute_Fitness);
-
-    procedure Trace_Wall is new Process_Wall
-                                   (State => Trace_State,
-                                    Initial => (null record),
-                                    Part => Trace_Part);
-
-    P1 : aliased Genetics.Population;
-    P2 : aliased Genetics.Population;
-
-    Current   : Genetics.Access_All_Population;
-    Next      : Genetics.Access_All_Population;
-    Fitnesses : aliased Genetics.Fitnesses;
-    Age       : Positive;
 
     use type Genetics.Fitness;
 begin

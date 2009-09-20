@@ -1,4 +1,7 @@
 with Ada.Numerics.Discrete_Random;
+with Ada.Text_Io;
+with Ada.Float_Text_Io;
+
 package body Genetics is
 
     Instantiation_Id : Integer := 0;
@@ -66,6 +69,8 @@ package body Genetics is
         procedure One_Point_Crossover (G1, G2 : Genome; G : out Genome) is
             Point : constant Gene := Gene_Random.Random (Gene_Generator);
         begin
+            -- Ada.Text_Io.Put_Line (Ada.Text_Io.Standard_Error,
+            --                       "Xover1 " & Gene'Image (Point));
             if Boolean_Random.Random (Boolean_Generator) then
                 G (Gene'First .. Point - 1) := G1 (Gene'First .. Point - 1);
                 G (Point .. Gene'Last)      := G2 (Point .. Gene'Last);
@@ -88,6 +93,9 @@ package body Genetics is
                 Point1 := P2;
                 Point2 := P1;
             end if;
+            -- Ada.Text_Io.Put_Line (Ada.Text_Io.Standard_Error,
+            --                       "Xover2 " & Gene'Image (Point1) &
+            --                          Gene'Image (Point2));
             if Boolean_Random.Random (Boolean_Generator) then
                 G (Gene'First .. Point1 - 1) := G1 (Gene'First .. Point1 - 1);
                 G (Point1 .. Point2 - 1)     := G2 (Point1 .. Point2 - 1);
@@ -115,6 +123,8 @@ package body Genetics is
             --     end if;
             -- end loop;
             for M in Mutations'Range loop
+                -- Ada.Text_Io.Put_Line (Ada.Text_Io.Standard_Error,
+                --                       "Mutated " & Gene'Image (Mutations (M)));
                 G (Mutations (M)) := not G (Mutations (M));
             end loop;
         end Mutate;
@@ -126,12 +136,39 @@ package body Genetics is
 
             L, M, U : Individual'Base;
         begin
+            -- Ada.Float_Text_Io.Put
+            --    (Ada.Text_Io.Standard_Error,
+            --     Float (Key), 1, 20, 0);
+            -- Ada.Text_Io.New_Line (Ada.Text_Io.Standard_Error);
             -- Knuth 6.2 Algorithm B.
             L := F.Cumulative'First;
             U := F.Cumulative'Last;
             loop
                 if U < L then
                     -- Exercise 1 says that U = L - 1 and Ku < K < Kl.
+                    -- if L = 825 then
+                    --     --     -- for I in F.Cumulative'Range loop
+                    --     --     --     Ada.Text_Io.Put
+                    --     --     --        (Ada.Text_Io.Standard_Error,
+                    --     --     --         "Cum(" & Individual'Image (I) & ") = ");
+                    --     --     --     Ada.Float_Text_Io.Put
+                    --     --     --        (
+                    --     --     --         Ada.Text_Io.Standard_Error,
+                    --     --     --         Float (F.Cumulative (I)), 1, 20, 0);
+                    --     --     --     Ada.Text_Io.New_Line (Ada.Text_Io.Standard_Error);
+                    --     --     -- end loop;
+                    --     --     Ada.Text_Io.Put
+                    --     --        (Ada.Text_Io.
+                    --     --         Standard_Error,
+                    --     --         "Picked " & Individual'Image (L) & " ");
+                    --     Ada.Float_Text_Io.Put
+                    --        (Ada.Text_Io.Standard_Error,
+                    --         Float (Key), 1, 20, 0);
+                    --     Ada.Text_Io.New_Line (Ada.Text_Io.Standard_Error);
+                    -- end if;
+                    -- Ada.Text_Io.Put_Line
+                    --    (Ada.Text_Io.
+                    --     Standard_Error, "Picked2 " & Individual'Image (L));
                     return L;
                 end if;
                 M := (U + L) / 2;
@@ -140,8 +177,14 @@ package body Genetics is
                 elsif Key > F.Cumulative (M) then
                     L := M + 1;
                 elsif M < Individual'First then
+                    -- Ada.Text_Io.Put_Line
+                    --    (Ada.Text_Io.
+                    --     Standard_Error, "Picked first");
                     return Individual'First;
                 else
+                    -- Ada.Text_Io.Put_Line
+                    --    (Ada.Text_Io.
+                    --     Standard_Error, "Picked " & Individual'Image (M));
                     return M;
                 end if;
             end loop;

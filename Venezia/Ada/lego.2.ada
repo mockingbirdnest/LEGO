@@ -29,6 +29,11 @@ package body Lego is
                   Red => 255,
                   Green => 255,
                   Blue => 255),
+        Dark_Gray => (Ldraw => 8,
+                      Transparent => False,
+                      Red => 99,
+                      Green => 95,
+                      Blue => 82),
         Dark_Orange => (Ldraw => 484,
                         Transparent => False,
                         Red => 179,
@@ -79,6 +84,11 @@ package body Lego is
                           Red => 16#69#,
                           Green => 16#40#,
                           Blue => 16#27#),
+        Sand_Green => (Ldraw => 378,
+                       Transparent => False,
+                       Red => 160,
+                       Green => 188,
+                       Blue => 172),
         Sand_Red => (Ldraw => 335,
                      Transparent => False,
                      Red => 191,
@@ -99,6 +109,21 @@ package body Lego is
     function Available (C : Color; P : Part) return Boolean is
     begin
         case P is
+            when Brick_1X1_Round =>
+                case C is
+                    when Brown | Dark_Gray | Dark_Orange | Dark_Red |
+                         Red | Reddish_Brown | Sand_Green | Tan =>
+                        return True;
+                    when others =>
+                        return False;
+                end case;
+            when Brick_1X2_Log =>
+                case C is
+                    when Brown | Red | Reddish_Brown =>
+                        return True;
+                    when others =>
+                        return False;
+                end case;
             when Plate_2X2_Corner =>
                 case C is
                     when Brown =>
@@ -416,6 +441,10 @@ package body Lego is
     function Part_Id_Image (P : Part) return String is
     begin
         case P is
+            when Brick_1X1_Round =>
+                return "3062b";
+            when Brick_1X2_Log =>
+                return "30136";
             when Plate_2X2_Corner =>
                 return "2420";
             when Plate_1X1 =>
