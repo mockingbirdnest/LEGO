@@ -37,7 +37,7 @@ package body Wall.Options is
 		     "Number of crossover points for reproduction");
 	Put_Line (Current_Error, "  /cycle false|true:false" & Ht & Ht &
 				    "Whether the generated wall is cyclic");
-	Put_Line (Current_Error, "  /hide top_bottom|left_right|tees" &
+	Put_Line (Current_Error, "  /hide top_bottom|left_right|tees|margin" &
 				    Ht & "Elements to hide");
 	Put_Line (Current_Error, "  /generations n:100" & Ht & Ht &
 				    "Number of generations to produce");
@@ -61,9 +61,9 @@ package body Wall.Options is
 		     "Widths constraining the right side, e.g. 012001");
 	Put_Line (Current_Error, "  /seed n:42" & Ht & Ht &
 				    Ht & "Random number seed");
-	Put_Line (Current_Error, "  /show top_bottom|left_right|tees" &
+	Put_Line (Current_Error, "  /show top_bottom|left_right|tees|margin" &
 				    Ht & "Elements to show");
-	Put_Line (Current_Error, "  /skip top_bottom|left_right|tees" &
+	Put_Line (Current_Error, "  /skip top_bottom|left_right|tees|margin" &
 				    Ht & "Elements to skip");
 	Put_Line (Current_Error, "  /tee n:none" & Ht & Ht & Ht &
 				    "Position of a tee in studs");
@@ -199,9 +199,6 @@ package body Wall.Options is
 	    if Left /= null or else Right /= null then
 		Usage ("No left or right constraint for cyclic wall");
 	    end if;
-	    if Top /= null or else Bottom /= null then
-		Usage ("No top or bottom constraint (yet) for cyclic wall");
-	    end if;
 	    if Private_Options.Corner = null or else
 	       Private_Options.Corner'Length /= 4 then
 		Usage ("Exactly 4 corners for cyclic wall");
@@ -219,28 +216,28 @@ package body Wall.Options is
 		Usage ("Tees not allowed for " & Parts_Option'Image (Parts));
 	    end if;
 	end if;
-	if Bottom /= null then
+	if Private_Options.Bottom /= null then
 	    declare
 		Sum : Natural := 0;
 	    begin
-		for I in Bottom'Range loop
-		    Sum := Sum + Bottom (I);
+		for I in Private_Options.Bottom'Range loop
+		    Sum := Sum + Private_Options.Bottom (I);
 		end loop;
-		if Sum /= Width then
+		if Sum /= Private_Options.Width then
 		    Usage ("Incorrect bottom constraint of length" &
 			   Integer'Image (Sum));
 		    return;
 		end if;
 	    end;
 	end if;
-	if Top /= null then
+	if Private_Options.Top /= null then
 	    declare
 		Sum : Natural := 0;
 	    begin
-		for I in Top'Range loop
-		    Sum := Sum + Top (I);
+		for I in Private_Options.Top'Range loop
+		    Sum := Sum + Private_Options.Top (I);
 		end loop;
-		if Sum /= Width then
+		if Sum /= Private_Options.Width then
 		    Usage ("Incorrect top constraint of length" &
 			   Integer'Image (Sum));
 		    return;

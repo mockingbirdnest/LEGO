@@ -131,16 +131,19 @@ begin
 	    if Wall.Options.Cycle then
 
 		-- Copy the part that spans the beginning of the "real" wall at
-		-- the end of the "real" wall.
+		-- the end of the "real" wall.  Don't do this for the top and
+		-- bottom constraints.
 		declare
 		    Original_Width : constant Positive  :=
 		       Width (Effective => False);
 		    After_Width    : Natural;  
 		    Before_Width   : Natural;  
 		    Wall_Start     : Genetics.Gene'Base :=
-		       Genetics.Gene (Cycle_Margin);
+		       Genetics.Gene (Cycle_Margin) +
+			  Bottom_Height * Separations_Per_Row;
 		begin
-		    while Wall_Start < Genome'Last loop
+		    while Wall_Start < Genome'Last -
+					  Top_Height * Separations_Per_Row loop
 			After_Width  := 0;
 			Before_Width := 0;
 			for I in Wall_Start .. Wall_Start + Original_Width loop
@@ -196,8 +199,7 @@ begin
 
 	    After_Corner             : Boolean;
 	    At_Edge_Of_Aligned_Rows  : Boolean;
-	    Column                   :
-	       Positive range 1 .. Positive (Separations_Per_Row);
+	    Column                   : Positive range 1 .. Separations_Per_Row;
 	    Deep_In_Left_Constraint  : Boolean;
 	    Deep_In_Right_Constraint : Boolean;
 	    End_Of_Row_Width         : Positive;
@@ -221,7 +223,7 @@ begin
 			    Ada.Text_Io.Put (Ada.Text_Io.Standard_Error,
 					     "Inexistent part");
 			when Separation_Imperfection =>
-			    Ada.Text_Io.Put_Line
+			    Ada.Text_Io.Put
 			       (Ada.Text_Io.Standard_Error, "Separation");
 			when Tee_Imperfection =>
 			    Ada.Text_Io.Put (Ada.Text_Io.Standard_Error,
@@ -292,7 +294,7 @@ begin
 		    when Here =>
 			return Column = Width or else Genome (I);
 		    when Right =>
-			return Column = Positive (Separations_Per_Row) or else
+			return Column = Separations_Per_Row or else
 				  Genome (I + 1);
 		    when Below =>  
 			return Row > 1 and then Genome
@@ -348,7 +350,7 @@ begin
 		      Column >= Width - Right (Row - 1);
 
 		-- Here Part_Width is the width of the part being constructed.
-		if Column = Positive (Separations_Per_Row) then
+		if Column = Separations_Per_Row then
 
 		    -- On the last separation of the row.
 		    if Has_Separation (I) then
@@ -477,7 +479,7 @@ begin
 		end if;
 
 		Part_Width := Part_Width + 1;
-		if Column = Positive (Separations_Per_Row) then
+		if Column = Separations_Per_Row then
 		    Column := 1;
 		else
 		    Column := Column + 1;

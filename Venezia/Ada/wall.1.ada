@@ -16,10 +16,10 @@ package Wall is
     function Height return Positive;
     function Width (Effective : Boolean := True) return Positive;
 
-    function Bottom return Options.Constraint;
+    function Bottom (Effective : Boolean := True) return Options.Constraint;
     function Bottom_Height return Natural;
     function Corner (Effective : Boolean := True) return Options.Positions;
-    function Top return Options.Constraint;
+    function Top (Effective : Boolean := True) return Options.Constraint;
     function Top_Height return Natural;
     function Left return Options.Constraint;
     function Right return Options.Constraint;
