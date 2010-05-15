@@ -19,51 +19,62 @@ package Genetics is
     type Access_All_Population is access all Genetics.Population;
     type Access_Constant_Population is access constant Genetics.Population;
 
+    package Operators is
+	function "+" (G : Gene'Base; I : Integer) return Gene'Base;
+	function "+" (I : Integer; G : Gene'Base) return Gene'Base;
+	function "-" (G : Gene'Base; I : Integer) return Gene'Base;
+	function "-" (G1, G2 : Gene'Base) return Integer;
+	function "<" (G1, G2 : Gene'Base) return Boolean renames Genetics."<";
+	function "<=" (G1, G2 : Gene'Base) return Boolean renames Genetics."<=";
+	function ">=" (G1, G2 : Gene'Base) return Boolean renames Genetics.">=";
+	function ">" (G1, G2 : Gene'Base) return Boolean renames Genetics.">";
+    end Operators;
+
     -- Each instance of this package has its own set of random generators.
     generic
-        Seed : Integer;
+	Seed : Integer;
     package Randomizer is
 
-        function Random return Genome;
+	function Random return Genome;
 
-        function One_Point_Crossover (G1, G2 : Genome) return Genome;
-        function Two_Point_Crossover (G1, G2 : Genome) return Genome;
-        function Mutate (G : Genome) return Genome;
+	function One_Point_Crossover (G1, G2 : Genome) return Genome;
+	function Two_Point_Crossover (G1, G2 : Genome) return Genome;
+	function Mutate (G : Genome) return Genome;
 
-        procedure One_Point_Crossover (G1, G2 : Genome; G : out Genome);
-        procedure Two_Point_Crossover (G1, G2 : Genome; G : out Genome);
-        procedure Mutate (G : in out Genome);
+	procedure One_Point_Crossover (G1, G2 : Genome; G : out Genome);
+	procedure Two_Point_Crossover (G1, G2 : Genome; G : out Genome);
+	procedure Mutate (G : in out Genome);
 
-        function Pick (F : Access_Constant_Fitnesses) return Individual;
+	function Pick (F : Access_Constant_Fitnesses) return Individual;
 
     end Randomizer;
 
     generic
-        type State is limited private;
-        type Access_All_State is access all State;
-        with procedure Process_Subpopulation (P : Access_Constant_Population;
-                                              First, Last : Individual;
-                                              S : Access_All_State);
-    procedure Process_Population (P : Access_Constant_Population;
-                                  S : Access_All_State);
+	type State is limited private;
+	type Access_All_State is access all State;
+	with procedure Process_Subpopulation (P           :
+						 Access_Constant_Population;
+					      First, Last : Individual;
+					      S           : Access_All_State);
+    procedure Process_Population
+		 (P : Access_Constant_Population; S : Access_All_State);
 
     generic
-        type Options is private;
-        with function Compute_Fitness
-                         (G : Genome; I : Individual; O : Options)
-                         return Fitness;
+	type Options is private;
+	with function Compute_Fitness (G : Genome; I : Individual; O : Options)
+				      return Fitness;
     function Compute_Fitnesses
-                (P : Access_Constant_Population; O : Options) return Fitnesses;
+		(P : Access_Constant_Population; O : Options) return Fitnesses;
 
 private
     type Array_Of_Fitness is array (Individual'Base range <>) of Fitness;
 
     type Fitnesses is
-        record
-            Individual : Array_Of_Fitness (Genetics.Individual);
-            Cumulative : Array_Of_Fitness (Genetics.Individual'First - 1 ..
-                                              Genetics.Individual'Last);
-        end record;
+	record
+	    Individual : Array_Of_Fitness (Genetics.Individual);
+	    Cumulative : Array_Of_Fitness (Genetics.Individual'First - 1 ..
+					      Genetics.Individual'Last);
+	end record;
 
     for Access_All_Fitnesses'Storage_Size use 0;
     for Access_Constant_Fitnesses'Storage_Size use 0;
