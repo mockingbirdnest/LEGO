@@ -1,0 +1,41 @@
+0 Author: Generate_Roof
+0 Unofficial Model
+0 Rotation Center 0 0 0 1 "Custom"
+0 Rotation Config 0 0
+0 /color LDRAW
+0 /colorseed 0
+0 /crossover 2
+0 /height 9
+0 /mutations 1.00000E-03
+0 /population 1000
+0 /seed 42
+0 /width 1
+0 /result_fitness 0.00000E+00
+0 /result_generation 1
+1  484  10  0  10 -1 0 0 0 1 0 0 0 -1 3062b.DAT
+0 STEP
+0 WRITE End of step 1
+1  378  10 -24  10 -1 0 0 0 1 0 0 0 -1 3062b.DAT
+0 STEP
+0 WRITE End of step 2
+1  320  10 -48  10 -1 0 0 0 1 0 0 0 -1 3062b.DAT
+0 STEP
+0 WRITE End of step 3
+1  484  10 -72  10 -1 0 0 0 1 0 0 0 -1 3062b.DAT
+0 STEP
+0 WRITE End of step 4
+1  484  10 -96  10 -1 0 0 0 1 0 0 0 -1 3062b.DAT
+0 STEP
+0 WRITE End of step 5
+1  484  10 -120  10 -1 0 0 0 1 0 0 0 -1 3062b.DAT
+0 STEP
+0 WRITE End of step 6
+1  320  10 -144  10 -1 0 0 0 1 0 0 0 -1 3062b.DAT
+0 STEP
+0 WRITE End of step 7
+1  484  10 -168  10 -1 0 0 0 1 0 0 0 -1 3062b.DAT
+0 STEP
+0 WRITE End of step 8
+1  484  10 -192  10 -1 0 0 0 1 0 0 0 -1 3062b.DAT
+0 STEP
+0 WRITE End of step 9

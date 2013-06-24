@@ -1,0 +1,77 @@
+0 Author: Generate_Wall
+0 Unofficial Model
+0 Rotation Center 0 0 0 1 "Custom"
+0 Rotation Config 0 0
+0 /bottom 2-1
+0 /color LDRAW
+0 /colorseed 0
+0 /crossover 2
+0 /cycle FALSE
+0 /height 17
+0 /mutations 1.00000E-03
+0 /population 1000
+0 /seed 42
+0 /width 3
+0 /result_fitness 1.00000E+00
+0 /result_generation 4
+1  25  10 -8  10 1 0 0 0 1 0 0 0 1 3024.DAT
+1  484  40 -8  10 1 0 0 0 1 0 0 0 1 3023.DAT
+0 STEP
+0 WRITE End of step 1
+1  4  30 -16  10 1 0 0 0 1 0 0 0 1 3623.DAT
+0 STEP
+0 WRITE End of step 2
+1  320  30 -24  10 1 0 0 0 1 0 0 0 1 3623.DAT
+0 STEP
+0 WRITE End of step 3
+1  4  10 -32  10 1 0 0 0 1 0 0 0 1 3024.DAT
+1  25  40 -32  10 1 0 0 0 1 0 0 0 1 3023.DAT
+0 STEP
+0 WRITE End of step 4
+1  6  30 -40  10 1 0 0 0 1 0 0 0 1 3623.DAT
+0 STEP
+0 WRITE End of step 5
+1  484  20 -48  10 1 0 0 0 1 0 0 0 1 3023.DAT
+1  25  50 -48  10 1 0 0 0 1 0 0 0 1 3024.DAT
+0 STEP
+0 WRITE End of step 6
+1  70  10 -56  10 1 0 0 0 1 0 0 0 1 3024.DAT
+1  484  40 -56  10 1 0 0 0 1 0 0 0 1 3023.DAT
+0 STEP
+0 WRITE End of step 7
+1  25  30 -64  10 1 0 0 0 1 0 0 0 1 3623.DAT
+0 STEP
+0 WRITE End of step 8
+1  4  10 -72  10 1 0 0 0 1 0 0 0 1 3024.DAT
+1  320  40 -72  10 1 0 0 0 1 0 0 0 1 3023.DAT
+0 STEP
+0 WRITE End of step 9
+1  320  30 -80  10 1 0 0 0 1 0 0 0 1 3623.DAT
+0 STEP
+0 WRITE End of step 10
+1  320  30 -88  10 1 0 0 0 1 0 0 0 1 3623.DAT
+0 STEP
+0 WRITE End of step 11
+1  70  10 -96  10 1 0 0 0 1 0 0 0 1 3024.DAT
+1  484  40 -96  10 1 0 0 0 1 0 0 0 1 3023.DAT
+0 STEP
+0 WRITE End of step 12
+1  25  30 -104  10 1 0 0 0 1 0 0 0 1 3623.DAT
+0 STEP
+0 WRITE End of step 13
+1  4  10 -112  10 1 0 0 0 1 0 0 0 1 3024.DAT
+1  25  30 -112  10 1 0 0 0 1 0 0 0 1 3024.DAT
+1  462  50 -112  10 1 0 0 0 1 0 0 0 1 3024.DAT
+0 STEP
+0 WRITE End of step 14
+1  25  30 -120  10 1 0 0 0 1 0 0 0 1 3623.DAT
+0 STEP
+0 WRITE End of step 15
+1  6  10 -128  10 1 0 0 0 1 0 0 0 1 3024.DAT
+1  484  40 -128  10 1 0 0 0 1 0 0 0 1 3023.DAT
+0 STEP
+0 WRITE End of step 16
+1  70  20 -136  10 1 0 0 0 1 0 0 0 1 3023.DAT
+1  25  50 -136  10 1 0 0 0 1 0 0 0 1 3024.DAT
+0 STEP
+0 WRITE End of step 17

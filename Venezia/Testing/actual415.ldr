@@ -1,0 +1,88 @@
+0 Author: Generate_Wall
+0 Unofficial Model
+0 Rotation Center 0 0 0 1 "Custom"
+0 Rotation Config 0 0
+0 /bottom 1-2
+0 /color LDRAW
+0 /colorseed 0
+0 /crossover 2
+0 /cycle FALSE
+0 /height 20
+0 /mutations 1.00000E-03
+0 /population 1000
+0 /right 0-0-0-0-0-0-0-0-0-0-0-0-0-0-1-1-1-1-1-1
+0 /seed 42
+0 /width 3
+0 /result_fitness 1.00000E+00
+0 /result_generation 4
+1  484  20 -8  10 1 0 0 0 1 0 0 0 1 3023.DAT
+1  6  50 -8  10 1 0 0 0 1 0 0 0 1 3024.DAT
+0 STEP
+0 WRITE End of step 1
+1  70  30 -16  10 1 0 0 0 1 0 0 0 1 3623.DAT
+0 STEP
+0 WRITE End of step 2
+1  462  10 -24  10 1 0 0 0 1 0 0 0 1 3024.DAT
+1  4  30 -24  10 1 0 0 0 1 0 0 0 1 3024.DAT
+1  25  50 -24  10 1 0 0 0 1 0 0 0 1 3024.DAT
+0 STEP
+0 WRITE End of step 3
+1  70  30 -32  10 1 0 0 0 1 0 0 0 1 3623.DAT
+0 STEP
+0 WRITE End of step 4
+1  484  20 -40  10 1 0 0 0 1 0 0 0 1 3023.DAT
+1  320  50 -40  10 1 0 0 0 1 0 0 0 1 3024.DAT
+0 STEP
+0 WRITE End of step 5
+1  320  30 -48  10 1 0 0 0 1 0 0 0 1 3623.DAT
+0 STEP
+0 WRITE End of step 6
+1  6  10 -56  10 1 0 0 0 1 0 0 0 1 3024.DAT
+1  484  40 -56  10 1 0 0 0 1 0 0 0 1 3023.DAT
+0 STEP
+0 WRITE End of step 7
+1  320  30 -64  10 1 0 0 0 1 0 0 0 1 3623.DAT
+0 STEP
+0 WRITE End of step 8
+1  70  10 -72  10 1 0 0 0 1 0 0 0 1 3024.DAT
+1  320  30 -72  10 1 0 0 0 1 0 0 0 1 3024.DAT
+1  70  50 -72  10 1 0 0 0 1 0 0 0 1 3024.DAT
+0 STEP
+0 WRITE End of step 9
+1  320  30 -80  10 1 0 0 0 1 0 0 0 1 3623.DAT
+0 STEP
+0 WRITE End of step 10
+1  320  30 -88  10 1 0 0 0 1 0 0 0 1 3623.DAT
+0 STEP
+0 WRITE End of step 11
+1  462  10 -96  10 1 0 0 0 1 0 0 0 1 3024.DAT
+1  25  40 -96  10 1 0 0 0 1 0 0 0 1 3023.DAT
+0 STEP
+0 WRITE End of step 12
+1  4  20 -104  10 1 0 0 0 1 0 0 0 1 3023.DAT
+1  462  50 -104  10 1 0 0 0 1 0 0 0 1 3024.DAT
+0 STEP
+0 WRITE End of step 13
+1  4  30 -112  10 1 0 0 0 1 0 0 0 1 3623.DAT
+0 STEP
+0 WRITE End of step 14
+1  70  20 -120  10 1 0 0 0 1 0 0 0 1 3023.DAT
+0 STEP
+0 WRITE End of step 15
+1  70  20 -128  10 1 0 0 0 1 0 0 0 1 3023.DAT
+0 STEP
+0 WRITE End of step 16
+1  6  20 -136  10 1 0 0 0 1 0 0 0 1 3023.DAT
+0 STEP
+0 WRITE End of step 17
+1  462  10 -144  10 1 0 0 0 1 0 0 0 1 3024.DAT
+1  4  30 -144  10 1 0 0 0 1 0 0 0 1 3024.DAT
+0 STEP
+0 WRITE End of step 18
+1  484  20 -152  10 1 0 0 0 1 0 0 0 1 3023.DAT
+0 STEP
+0 WRITE End of step 19
+1  6  10 -160  10 1 0 0 0 1 0 0 0 1 3024.DAT
+1  70  30 -160  10 1 0 0 0 1 0 0 0 1 3024.DAT
+0 STEP
+0 WRITE End of step 20

@@ -1,0 +1,40 @@
+0 Author: Generate_Wall
+0 Unofficial Model
+0 Rotation Center 0 0 0 1 "Custom"
+0 Rotation Config 0 0
+0 /bottom 6-3-1
+0 /color LDRAW
+0 /colorseed 0
+0 /crossover 2
+0 /cycle FALSE
+0 /height 4
+0 /mutations 1.00000E-03
+0 /population 1000
+0 /seed 42
+0 /width 10
+0 /result_fitness 1.00000E+00
+0 /result_generation 4
+1  462  10 -8  10 1 0 0 0 1 0 0 0 1 3024.DAT
+1  70  30 -8  10 1 0 0 0 1 0 0 0 1 3024.DAT
+1  4  100 -8  10 1 0 0 0 1 0 0 0 1 3666.DAT
+1  320  180 -8  10 1 0 0 0 1 0 0 0 1 3023.DAT
+0 STEP
+0 WRITE End of step 1
+1  320  40 -16  10 1 0 0 0 1 0 0 0 1 3710.DAT
+1  70  110 -16  10 1 0 0 0 1 0 0 0 1 3623.DAT
+1  6  160 -16  10 1 0 0 0 1 0 0 0 1 3023.DAT
+1  320  190 -16  10 1 0 0 0 1 0 0 0 1 3024.DAT
+0 STEP
+0 WRITE End of step 2
+1  25  30 -24  10 1 0 0 0 1 0 0 0 1 3623.DAT
+1  320  80 -24  10 1 0 0 0 1 0 0 0 1 3023.DAT
+1  6  130 -24  10 1 0 0 0 1 0 0 0 1 3623.DAT
+1  4  180 -24  10 1 0 0 0 1 0 0 0 1 3023.DAT
+0 STEP
+0 WRITE End of step 3
+1  462  20 -32  10 1 0 0 0 1 0 0 0 1 3023.DAT
+1  320  60 -32  10 1 0 0 0 1 0 0 0 1 3023.DAT
+1  4  110 -32  10 1 0 0 0 1 0 0 0 1 3623.DAT
+1  6  170 -32  10 1 0 0 0 1 0 0 0 1 3623.DAT
+0 STEP
+0 WRITE End of step 4
